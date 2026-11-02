@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Leovian — Website Prototype</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0D0D0D;
+            --bg2: #171717;
+            --g: #C8A66A;
+            --g2: #E2C58E;
+            --t: #F5F0E8;
+            --t2: #BDB5AA;
+            --ln: #3a3226;
+            color-scheme: dark
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--t);
+            font: 16px/1.65 Inter, system-ui, sans-serif;
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        h1,
+        h2,
+        h3,
+        blockquote {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 500;
+            line-height: 1.15
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--g2);
+            outline-offset: 3px
+        }
+
+        #nav {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 20;
+            background: #0D0D0DEB;
+            border-bottom: 1px solid var(--ln);
+            padding: env(safe-area-inset-top, 0px) 5vw 0;
+            height: calc(68px + env(safe-area-inset-top, 0px));
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .logo {
+            font: 600 22px 'Cormorant Garamond', serif;
+            letter-spacing: .3em;
+            color: var(--g2)
+        }
+
+        .nl {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 13px
+        }
+
+        .nl>a,
+        .dd>a {
+            position: relative;
+            padding: 8px 0;
+            color: var(--t2)
+        }
+
+        .nl>a::after,
+        .dd>a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+            width: 0;
+            background: var(--g);
+            transition: width .3s
+        }
+
+        .nl>a:hover,
+        .dd>a:hover,
+        .cur {
+            color: var(--t) !important
+        }
+
+        .nl>a:hover::after,
+        .dd>a:hover::after,
+        .cur::after {
+            width: 100%
+        }
+
+        .dd {
+            position: relative
+        }
+
+        .menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: -20px;
+            background: var(--bg2);
+            border: 1px solid var(--ln);
+            padding: 20px 24px;
+            gap: 36px;
+            min-width: 420px
+        }
+
+        .dd:hover .menu,
+        .dd:focus-within .menu {
+            display: flex
+        }
+
+        .menu b {
+            display: block;
+            color: var(--g);
+            font: 500 12px Inter;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            margin-bottom: 8px
+        }
+
+        .menu a {
+            display: block;
+            padding: 4px 0;
+            color: var(--t2)
+        }
+
+        .menu a:hover {
+            color: var(--g2)
+        }
+
+        .lg button {
+            background: none;
+            border: 0;
+            color: var(--t2);
+            padding: 10px 8px;
+            min-width: 44px;
+            min-height: 44px
+        }
+
+        .lg .on {
+            color: var(--g2);
+            border-bottom: 1px solid var(--g)
+        }
+
+        .mb {
+            display: none;
+            background: none;
+            border: 1px solid var(--ln);
+            padding: 10px 14px;
+            min-height: 44px
+        }
+
+        .lab {
+            font-size: 12px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--g)
+        }
+
+        .sec {
+            padding: 96px 5vw
+        }
+
+        .alt {
+            background: var(--bg2)
+        }
+
+        .in {
+            max-width: 1180px;
+            margin: 0 auto
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin: 10px 0 20px
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            margin-bottom: 6px
+        }
+
+        p {
+            color: var(--t2);
+            max-width: 62ch
+        }
+
+        .btn {
+            border: 1px solid var(--g);
+            background: none;
+            color: var(--g2);
+            padding: 12px 26px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-size: 13px;
+            transition: .25s;
+            display: inline-block
+        }
+
+        .btn:hover {
+            background: var(--g);
+            color: #0D0D0D
+        }
+
+        .g2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 24px;
+            margin-top: 36px
+        }
+
+        .g4 {
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr))
+        }
+
+        .card {
+            background: var(--bg2);
+            border: 1px solid var(--ln);
+            transition: border-color .3s;
+            overflow: hidden
+        }
+
+        .alt .card {
+            background: var(--bg)
+        }
+
+        .card:hover,
+        .card:focus-visible {
+            border-color: var(--g)
+        }
+
+        .card .b {
+            padding: 22px
+        }
+
+        .card .ph {
+            aspect-ratio: 16/10;
+            transition: transform .3s
+        }
+
+        .card:hover .ph {
+            transform: scale(1.04)
+        }
+
+        .card>div:first-child {
+            overflow: hidden
+        }
+
+        .ph {
+            position: relative;
+            background: radial-gradient(circle at 30% 30%, #2b2418, #161411 70%)
+        }
+
+        .pt {
+            background: radial-gradient(circle at 50% 36%, #3a3020 0 13%, #0000 13.5%), radial-gradient(ellipse at 50% 100%, #3a3020 0 38%, #0000 38.5%), #171717
+        }
+
+        [data-l]::after {
+            display: none;
+            content: attr(data-l);
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            z-index: 5;
+            font-size: 10px;
+            letter-spacing: .08em;
+            color: var(--g2);
+            background: #0D0D0DD9;
+            border: 1px dashed var(--g);
+            padding: 3px 7px
+        }
+
+        .notes [data-l]::after {
+            display: block
+        }
+
+        .hero {
+            position: relative;
+            height: 100svh;
+            min-height: 600px;
+            overflow: hidden;
+            background: var(--bg)
+        }
+
+        .sc {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s;
+            overflow: hidden
+        }
+
+        .sc.on {
+            opacity: 1
+        }
+
+        .sc i {
+            position: absolute;
+            inset: -6%;
+            animation: kb 7s ease-in-out infinite alternate
+        }
+
+        .sc::after {
+            top: 84px;
+            bottom: auto;
+            left: auto;
+            right: 10px
+        }
+
+        @keyframes kb {
+            to {
+                transform: scale(1.1) translate(-2%, -1.5%)
+            }
+        }
+
+        @keyframes fill {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        .ov {
+            position: absolute;
+            inset: 0;
+            background: #0D0D0D8C
+        }
+
+        .ov::after {
+            top: 84px;
+            bottom: auto
+        }
+
+        .hc {
+            position: absolute;
+            left: 5vw;
+            right: 5vw;
+            bottom: 190px;
+            max-width: 780px
+        }
+
+        .hc h1 {
+            font-size: clamp(1.9rem, 4.6vw, 3.8rem);
+            margin: 14px 0
+        }
+
+        .hc h1+h2 {
+            font: italic 500 clamp(1.4rem, 2.6vw, 2rem) 'Cormorant Garamond', serif;
+            color: var(--g2);
+            margin: 0 0 14px
+        }
+
+        .hc p {
+            margin-bottom: 24px;
+            color: var(--t)
+        }
+
+        .pb {
+            position: absolute;
+            left: 5vw;
+            right: 5vw;
+            bottom: calc(26px + env(safe-area-inset-bottom, 0px))
+        }
+
+        .cap {
+            font-size: 13px;
+            color: var(--t2);
+            margin-bottom: 12px;
+            min-height: 1.6em
+        }
+
+        .pr {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start
+        }
+
+        .pi {
+            flex: 1;
+            background: none;
+            border: 0;
+            text-align: left;
+            padding: 0;
+            color: var(--t2);
+            font-size: 12px;
+            letter-spacing: .08em
+        }
+
+        .pi u {
+            display: block;
+            height: 2px;
+            background: var(--ln);
+            margin-bottom: 8px;
+            position: relative
+        }
+
+        .pi u::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 2px;
+            width: 0;
+            background: var(--g)
+        }
+
+        .pi.on {
+            color: var(--g2)
+        }
+
+        .pi.on u::after {
+            animation: fill 6s linear forwards
+        }
+
+        .paused .pi.on u::after {
+            animation: none;
+            width: 100%
+        }
+
+        .pi b {
+            display: none;
+            font-weight: 400
+        }
+
+        .pp {
+            background: none;
+            border: 1px solid var(--ln);
+            padding: 2px 10px;
+            font-size: 12px
+        }
+
+        .cr {
+            overflow: hidden;
+            position: relative
+        }
+
+        .tr {
+            display: flex;
+            transition: transform .8s ease
+        }
+
+        .sl {
+            min-width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 70vh;
+            background: var(--bg2)
+        }
+
+        .sl .ph {
+            min-height: 340px
+        }
+
+        .sl .tx {
+            padding: 6vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        blockquote {
+            font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+            color: var(--t);
+            margin: 18px 0 26px
+        }
+
+        .nm {
+            color: var(--g2);
+            font-size: 1.05rem
+        }
+
+        .rl {
+            color: var(--t2);
+            font-size: 13px;
+            letter-spacing: .1em
+        }
+
+        .cc {
+            position: absolute;
+            right: 5vw;
+            bottom: 24px;
+            display: flex;
+            gap: 8px;
+            z-index: 6
+        }
+
+        .cc button {
+            background: var(--bg);
+            border: 1px solid var(--g);
+            width: 44px;
+            height: 44px;
+            color: var(--g2)
+        }
+
+        .cc button:hover {
+            background: var(--g);
+            color: #0D0D0D
+        }
+
+        .pn {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: left;
+            min-height: 420px;
+            border: 1px solid var(--ln);
+            background: none;
+            overflow: hidden;
+            padding: 0
+        }
+
+        .pn .ph {
+            position: absolute;
+            inset: 0;
+            transition: transform .8s
+        }
+
+        .pn:hover .ph {
+            transform: scale(1.05)
+        }
+
+        .pn:hover,
+        .pn:focus-visible {
+            border-color: var(--g)
+        }
+
+        .pn .tx {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 30px;
+            background: #0D0D0DCC
+        }
+
+        .cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            gap: 40px;
+            margin-top: 36px
+        }
+
+        .cols>div {
+            border-top: 1px solid var(--g);
+            padding-top: 18px
+        }
+
+        label {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--t2);
+            font-size: 13px;
+            letter-spacing: .05em
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            margin-top: 6px;
+            background: var(--bg);
+            border: 1px solid var(--ln);
+            color: var(--t);
+            padding: 12px;
+            font: inherit
+        }
+
+        .alt input,
+        .alt select,
+        .alt textarea {
+            background: var(--bg2)
+        }
+
+        .ok {
+            border: 1px solid var(--g);
+            padding: 20px;
+            color: var(--g2)
+        }
+
+        dialog {
+            background: var(--bg2);
+            color: var(--t);
+            border: 1px solid var(--g);
+            max-width: 520px;
+            width: 90%;
+            padding: 28px;
+            margin: auto
+        }
+
+        dialog::backdrop {
+            background: #000000B3
+        }
+
+        .fl {
+            position: fixed;
+            z-index: 15;
+            bottom: calc(18px + env(safe-area-inset-bottom, 0px))
+        }
+
+        .talk {
+            right: 18px;
+            min-height: 44px;
+            background: var(--g);
+            color: #0D0D0D;
+            border: 0;
+            padding: 12px 20px;
+            font-size: 13px;
+            letter-spacing: .06em
+        }
+
+        .nt {
+            left: 18px;
+            background: var(--bg2);
+            border: 1px solid var(--ln);
+            padding: 12px;
+            min-height: 44px;
+            font-size: 12px;
+            color: var(--t2)
+        }
+
+        footer {
+            padding: 40px 5vw;
+            border-top: 1px solid var(--ln);
+            font-size: 13px;
+            color: var(--t2)
+        }
+
+        @media(max-width:1080px) {
+            .mb {
+                display: block
+            }
+
+            .nl {
+                display: none;
+                position: absolute;
+                top: calc(68px + env(safe-area-inset-top, 0px));
+                left: 0;
+                right: 0;
+                background: var(--bg2);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px 5vw;
+                max-height: 80vh;
+                overflow: auto
+            }
+
+            #nav.open .nl {
+                display: flex
+            }
+
+            .nl>a,
+            .dd>a,
+            .menu a {
+                padding: 12px 0
+            }
+
+            .menu {
+                display: block;
+                position: static;
+                min-width: 0;
+                border: 0;
+                padding: 6px 0 0 12px
+            }
+
+            .dd:hover .menu {
+                display: block
+            }
+
+            .sl {
+                grid-template-columns: 1fr
+            }
+
+            .hc {
+                bottom: 200px
+            }
+
+            .pi span {
+                display: block
+            }
+
+            .sec {
+                padding: 72px 5vw
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .sc i,
+            .lp i,
+            .tr,
+            .card .ph,
+            .pn .ph {
+                animation: none;
+                transition: none
+            }
+
+            html {
+                scroll-behavior: auto
+            }
+
+            .pi.on u::after {
+                animation: none;
+                width: 100%
+            }
+        }
+
+        .lw {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate
+        }
+
+        .lw::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #0D0D0DA6;
+            z-index: -1
+        }
+
+        .lp {
+            position: absolute;
+            inset: 0;
+            z-index: -2
+        }
+
+        .lp i {
+            position: absolute;
+            inset: -8%;
+            animation: kb 8s ease-in-out infinite alternate
+        }
+
+        .lp1 i {
+            background: radial-gradient(ellipse at 30% 40%, #4a3818, #0D0D0D 75%)
+        }
+
+        .lp2 i {
+            background: radial-gradient(ellipse at 65% 45%, #3b2a1c, #0D0D0D 75%);
+            animation-name: kb2
+        }
+
+        .lp3 i {
+            background: radial-gradient(ellipse at 50% 60%, #2f3020, #0D0D0D 75%);
+            animation-name: kb3
+        }
+
+        @keyframes kb2 {
+            from {
+                transform: scale(1.1)
+            }
+
+            to {
+                transform: scale(1) translate(2%, 1%)
+            }
+        }
+
+        @keyframes kb3 {
+            to {
+                transform: translate(-4%, 0) scale(1.08)
+            }
+        }
+
+        .hd {
+            padding: 150px 5vw 90px
+        }
+
+        .hd h1 {
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            margin-bottom: 12px
+        }
+
+        .sb {
+            font: italic 500 clamp(1.3rem, 2.4vw, 1.9rem) 'Cormorant Garamond', serif;
+            color: var(--g2);
+            margin-bottom: 14px;
+            max-width: none
+        }
+
+        .band {
+            padding: 110px 5vw;
+            min-height: 48vh;
+            display: flex;
+            align-items: center
+        }
+
+        .band .in {
+            width: 100%
+        }
+
+        .band h2 {
+            font-size: clamp(2.4rem, 5vw, 4.2rem)
+        }
+
+        .hero.lw .hc h1+h2 {
+            margin-top: 0
+        }
+
+        .lp svg {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .hm::before {
+            background: #0D0D0D80
+        }
+
+        .bd {
+            transform-box: fill-box;
+            transform-origin: bottom;
+            animation: grow 9s ease-in-out infinite
+        }
+
+        @keyframes grow {
+            0% {
+                transform: scaleY(0)
+            }
+
+            30%,
+            85% {
+                transform: scaleY(1)
+            }
+
+            100% {
+                transform: scaleY(0)
+            }
+        }
+
+        .ln1 {
+            stroke-dasharray: 2000;
+            animation: draw 9s ease-in-out infinite
+        }
+
+        @keyframes draw {
+            0% {
+                stroke-dashoffset: 2000
+            }
+
+            50%,
+            90% {
+                stroke-dashoffset: 0
+            }
+
+            100% {
+                stroke-dashoffset: 2000
+            }
+        }
+
+        .fg {
+            animation: bob 5s ease-in-out infinite alternate
+        }
+
+        @keyframes bob {
+            to {
+                transform: translateY(-24px)
+            }
+        }
+
+        .rp {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: rip 6.6s ease-out infinite
+        }
+
+        @keyframes rip {
+            from {
+                transform: scale(.6);
+                opacity: .8
+            }
+
+            to {
+                transform: scale(2.6);
+                opacity: 0
+            }
+        }
+
+        .sun {
+            animation: sunr 8s ease-in-out infinite alternate
+        }
+
+        @keyframes sunr {
+            from {
+                transform: translateY(70px)
+            }
+
+            to {
+                transform: translateY(0)
+            }
+        }
+
+        .lk,
+        .lk2 {
+            animation: lk 6s ease-in-out infinite alternate
+        }
+
+        .lk2 {
+            animation-name: lk2
+        }
+
+        @keyframes lk {
+            from {
+                transform: translateX(-46px)
+            }
+
+            to {
+                transform: translateX(0)
+            }
+        }
+
+        @keyframes lk2 {
+            from {
+                transform: translateX(46px)
+            }
+
+            to {
+                transform: translateX(0)
+            }
+        }
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(22px)
+            }
+        }
+
+        .hero .hc>* {
+            animation: rise .9s both
+        }
+
+        .hero .hc>:nth-child(2) {
+            animation-delay: .15s
+        }
+
+        .hero .hc>:nth-child(3) {
+            animation-delay: .3s
+        }
+
+        .hero .hc>:nth-child(4) {
+            animation-delay: .45s
+        }
+
+        .hero .hc>:nth-child(5) {
+            animation-delay: .6s
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .8s, transform .8s
+        }
+
+        .rv.on2 {
+            opacity: 1;
+            transform: none
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            .bd,
+            .fg,
+            .rp,
+            .sun,
+            .lk,
+            .lk2,
+            .hero .hc>* {
+                animation: none
+            }
+
+            .ln1 {
+                animation: none;
+                stroke-dashoffset: 0
+            }
+
+            .rv {
+                opacity: 1;
+                transform: none;
+                transition: none
+            }
+        }
+    </style>
+</head>
+
+<body class="notes">
+    <nav id="nav" aria-label="Main"></nav>
+    <main id="app"></main>
+    <footer id="ft"></footer>
+    <button class="fl talk" id="talk"></button><button class="fl nt" id="nt" aria-pressed="true"></button>
+    <dialog id="dlg"></dialog>
+    <script>
+        const $ = s => document.querySelector(s); let lang = 'vi', page = 'home', sec = null, T1, T2, cur = 0, ci = 0, hov = false;
+        const L = (e, v) => lang === 'vi' ? v : e, RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+        const N = [['home', 'Home', 'Trang chủ'], ['about', 'About Us', 'Về chúng tôi'], ['ecosystem', 'Our Ecosystem', 'Hệ sinh thái'], ['news', 'News & Insights', 'Tin tức & Góc nhìn'], ['startuplab', 'Startup Hub', 'Startup Hub'], ['events', 'Events', 'Sự kiện'], ['contact', 'Contact', 'Liên hệ']];
+        const INV = [['Education', 'Giáo dục', 'Connecting investment and development opportunities in education, training, and human capability building.', 'Kết nối các cơ hội đầu tư và phát triển trong lĩnh vực giáo dục, đào tạo và nâng cao năng lực con người.'], ['Real Estate', 'Bất động sản', 'Exploring real estate investment and development opportunities with a focus on long-term asset value.', 'Khám phá các cơ hội đầu tư và phát triển bất động sản, hướng tới xây dựng giá trị tài sản dài hạn.'], ['Technology', 'Công nghệ', 'Exploring innovative technology projects and solutions with potential for practical application and growth.', 'Hướng tới các dự án và giải pháp công nghệ có tiềm năng ứng dụng, đổi mới và phát triển.'], ['Health', 'Sức khỏe', 'Exploring opportunities in healthcare and wellbeing that contribute to improving quality of life.', 'Khám phá các cơ hội trong lĩnh vực chăm sóc sức khỏe, hướng tới nâng cao chất lượng cuộc sống.']];
+        const PAR = [['Business Consulting', 'Tư vấn doanh nghiệp', 'Supporting businesses in developing strategies, refining business models, and identifying growth opportunities tailored to each stage of development.', 'Hỗ trợ doanh nghiệp xây dựng chiến lược, phát triển mô hình kinh doanh và xác định định hướng tăng trưởng phù hợp với từng giai đoạn.'], ['Marketing', 'Giải pháp Marketing', 'Supporting brand development, content creation, communications, and the execution of marketing campaigns aligned with business objectives.', 'Hỗ trợ xây dựng thương hiệu, phát triển nội dung, truyền thông và triển khai các chiến dịch marketing phù hợp với mục tiêu doanh nghiệp.'], ['O System (Operation System)', 'O System — Giải pháp vận hành', 'Supporting businesses in organising, executing, and managing business activities through dedicated expertise and operational resources.', 'Hỗ trợ doanh nghiệp tổ chức, triển khai và vận hành các hoạt động kinh doanh thông qua đội ngũ chuyên môn và nguồn lực phù hợp.']];
+        const LP = [['Building Wealth', 'Kiến tạo tài sản', 'Building wealth through vision and strategic decisions.', 'Kiến tạo tài sản bằng tầm nhìn và những quyết định chiến lược.'], ['Empowering People', 'Phát triển con người', 'Investing in people as the foundation of long-term growth.', 'Đầu tư vào con người là nền tảng của tăng trưởng dài hạn.'], ['Creating Lasting Value', 'Tạo giá trị bền vững', 'Creating sustainable value through meaningful, long-term collaboration.', 'Tạo giá trị bền vững qua hợp tác ý nghĩa và lâu dài.']];
+        const lw = (n, c, x, id) => `<section class="lw ${c}" ${id ? `id="${id}"` : ''} data-l="[HOMEPAGE — VIDEO LOOP 0${n}]"><div class="lp lp${n}"><i></i></div>${x}</section>`;
+        const hd = (t, sb, p, n) => lw(n, 'hd', `<div class="in"><h1>${t}</h1><p class="sb">${sb}</p><p style="color:var(--t)">${p}</p></div>`);
+        const bt = (t, f) => `<button class="btn" onclick="${f}">${t} ↗</button>`;
+        const two = (a, b) => `<div class="g2" style="gap:56px">${[a, b].map(x => `<div><span class="lab">${x[0]}</span><h2>${x[1]}</h2><p style="margin-bottom:22px">${x[2]}</p>${x[3]}</div>`).join('')}</div>`;
+        const cards = (A, pre, lab, cl) => `<div class="g2 ${A.length == 4 ? 'g4' : ''}">${A.map((x, i) => `<article class="card" id="${pre}${i}" tabindex="0"><div>${ph(lab, cl[i])}</div><div class="b"><h3>${L(x[0], x[1])}</h3><p>${L(x[2], x[3])}</p></div></article>`).join('')}</div>`;
+        const EV = [['Networking Evening (Demo)', 'Tối kết nối doanh nghiệp (Demo)', 'Business discussions and community networking. Demonstration event only.', 'Thảo luận kinh doanh và kết nối cộng đồng. Chỉ là sự kiện minh họa.', 'Date placeholder 01', 'Ngày minh họa 01', 'Melbourne (placeholder)'], ['Australia–Vietnam Business Forum (Demo)', 'Diễn đàn doanh nghiệp Úc – Việt (Demo)', 'A forum format for partners and investors. Demonstration event only.', 'Diễn đàn dành cho đối tác và nhà đầu tư. Chỉ là sự kiện minh họa.', 'Date placeholder 02', 'Ngày minh họa 02', 'Melbourne / Ho Chi Minh City (placeholder)'], ['Founders Roundtable (Demo)', 'Bàn tròn nhà sáng lập (Demo)', 'An open conversation between founders. Demonstration event only.', 'Cuộc trò chuyện mở giữa các nhà sáng lập. Chỉ là sự kiện minh họa.', 'Date placeholder 03', 'Ngày minh họa 03', 'Melbourne (placeholder)'], ['Community Gathering (Past demo)', 'Gặp gỡ cộng đồng (Demo đã qua)', 'Highlights: introductions, short talks and open networking.', 'Điểm nhấn: giới thiệu, chia sẻ ngắn và kết nối tự do.', 'Past date placeholder', 'Ngày đã qua (minh họa)', 'Melbourne (placeholder)'], ['Investor Briefing (Past demo)', 'Buổi giới thiệu đầu tư (Demo đã qua)', 'Highlights: a briefing format with Q&A.', 'Điểm nhấn: buổi giới thiệu có phần hỏi đáp.', 'Past date placeholder', 'Ngày đã qua (minh họa)', 'Melbourne (placeholder)'], ['Workshop Day (Past demo)', 'Ngày workshop (Demo đã qua)', 'Highlights: hands-on sessions and team discussions.', 'Điểm nhấn: thực hành và thảo luận nhóm.', 'Past date placeholder', 'Ngày đã qua (minh họa)', 'Melbourne (placeholder)']];
+        const F = (l, n, t = 'text') => `<label>${l}<input name="${n}" type="${t}" required></label>`;
+        const ph = (l, c) => `<div class="ph" data-l="[${l}]"${c ? ` style="background:radial-gradient(circle at 70% 30%,${c},#0D0D0D 80%)"` : ''}></div>`;
+        const sv = x => `<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${x}</svg>`;
+        const S1 = sv(`<g stroke="#3a3226">${[...Array(17)].map((_, i) => `<path d="M${i * 100} 0V900M0 ${i * 55}H1600"/>`).join('')}</g><g fill="#171717" stroke="#C8A66A" stroke-width="2">${[[160, 380, 120], [300, 260, 150], [470, 440, 110], [620, 200, 170], [820, 340, 140], [990, 150, 160], [1170, 300, 130], [1320, 230, 150]].map((b, i) => `<rect class="bd" style="animation-delay:${i * .5}s" x="${b[0]}" y="${900 - b[1]}" width="${b[2]}" height="${b[1]}"/>`).join('')}</g><path class="ln1" d="M60 760C400 700 600 640 800 540S1200 330 1540 160" fill="none" stroke="#E2C58E" stroke-width="3"/>`);
+        const S2 = sv(`<path class="ln1" d="M250 460Q500 330 760 380T1300 300" fill="none" stroke="#C8A66A" stroke-width="2" opacity=".6"/><circle class="rp" cx="760" cy="520" r="90" fill="none" stroke="#E2C58E" stroke-width="2"/>${[[250, 620, .8], [500, 600, .9], [760, 570, 1.2], [1020, 560, .95], [1300, 540, 1.05]].map((p, i) => `<g transform="translate(${p[0]} ${p[1]}) scale(${p[2]})"><g class="fg" style="animation-delay:${i * .7}s"><circle cx="0" cy="-90" r="34" fill="#3a3020"/><path d="M-70 60Q-70-40 0-40Q70-40 70 60Z" fill="#2b2418" stroke="#C8A66A" stroke-width="2"/></g></g>`).join('')}`);
+        const S3 = sv(`<circle class="sun" cx="800" cy="560" r="110" fill="#C8A66A" opacity=".55"/>${[0, 1, 2].map(i => `<circle class="rp" style="animation-delay:${i * 2.2}s" cx="800" cy="560" r="130" fill="none" stroke="#E2C58E" stroke-width="2"/>`).join('')}<path d="M0 640Q400 560 800 620T1600 600V900H0Z" fill="#171717"/><path d="M0 720Q500 650 900 710T1600 690V900H0Z" fill="#0D0D0D"/><g fill="none" stroke="#E2C58E" stroke-width="2.5"><circle class="lk" cx="740" cy="800" r="42"/><circle class="lk2" cx="810" cy="800" r="42"/></g>`);
+        const lwh = (n, c, x) => lw(n, c + ' hm', x).replace('<i></i>', `<i>${[S1, S2, S3][n - 1]}</i>`);
+        function rv() { const els = document.querySelectorAll('.band .in,.sec .in'); if (RM || !window.IntersectionObserver) { els.forEach(e => e.classList.add('on2')); return } const o = new IntersectionObserver(a => a.forEach(x => { if (x.isIntersecting) { x.target.classList.add('on2'); o.unobserve(x.target) } }), { threshold: .2 }); els.forEach(e => { e.classList.add('rv'); o.observe(e) }) }
+        const V = {};
+        V.home = () => lwh(1, 'hero', `<div class="hc" style="bottom:auto;top:50%;transform:translateY(-50%)"><span class="lab">${L('Home', 'Trang chủ')}</span><h1>${L('INVESTMENT &amp; BUSINESS DEVELOPMENT ECOSYSTEM', 'HỆ SINH THÁI ĐẦU TƯ &amp; PHÁT TRIỂN DOANH NGHIỆP')}</h1><h2>${L('Building Wealth. Empowering People.', 'Kiến tạo tài sản. Phát triển con người.')}</h2><p>${L('Connecting capital, businesses, assets and Vietnamese communities across Australia and Vietnam to create lasting value for generations.', 'Kết nối vốn, doanh nghiệp, tài sản và cộng đồng Việt tại Úc và Việt Nam, hướng tới giá trị bền vững cho nhiều thế hệ.')}</p>${bt(L('Explore Leovian', 'Khám phá Leovian'), "go('ecosystem')")}</div>`)
+            + `<section class="sec"><div class="in"><span class="lab">${L('ABOUT LEOVIAN', 'VỀ LEOVIAN')}</span><h2>${L('Connecting Resources. Supporting Long-Term Growth.', 'Kết nối nguồn lực. Phát triển dài hạn.')}</h2><p style="margin-bottom:22px">${L('Leovian is building an ecosystem where investment and people development work together to support business and asset growth.', 'Leovian xây dựng một hệ sinh thái nơi đầu tư và phát triển con người cùng tạo nền tảng cho sự phát triển của doanh nghiệp và tài sản.')}</p>${bt(L('About Us', 'Về chúng tôi'), "go('about')")}</div></section>`
+            + LP.map((s, i) => lwh(i + 1, 'band', `<div class="in"><span class="lab">${i ? '' : L('OUR PURPOSE', 'GIÁ TRỊ HƯỚNG TỚI')}</span><h2>${L(s[0], s[1])}</h2><p style="color:var(--t)">${L(s[2], s[3])}</p></div>`)).join('')
+            + `<section class="sec"><div class="in"><span class="lab">${L('OUR ECOSYSTEM', 'HỆ SINH THÁI')}</span><div class="g2">${[[L('INVESTMENT', 'ĐẦU TƯ'), L('Explore Leovian’s investment direction and approach to long-term value creation.', 'Khám phá định hướng đầu tư và phát triển giá trị dài hạn trong hệ sinh thái Leovian.'), L('Explore Investment', 'Tìm hiểu Investment'), 'inv', 'ECOSYSTEM — INVESTMENT PROJECT PHOTO'], [L('PARTNERSHIP', 'HỢP TÁC'), L('Explore connections and collaboration within the Leovian ecosystem.', 'Khám phá hướng kết nối và hợp tác trong hệ sinh thái Leovian.'), L('Explore Partnership', 'Tìm hiểu Partnership'), 'par', 'ECOSYSTEM — PARTNERSHIP TEAM PHOTO']].map(x => `<article class="card"><div>${ph(x[4])}</div><div class="b"><h3>${x[0]}</h3><p style="margin-bottom:18px">${x[1]}</p>${bt(x[2], `go('ecosystem','${x[3]}')`)}</div></article>`).join('')}</div></div></section>`
+            + `<section class="sec alt"><div class="in">${two([L('NEWS &amp; INSIGHTS', 'TIN TỨC &amp; GÓC NHÌN'), L('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), L('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'), bt(L('View News', 'Xem tin tức'), "go('news')")], [L('EVENTS', 'SỰ KIỆN'), L('Meet. Connect. Grow.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), L('Explore events from Leovian and our partners.', 'Khám phá các sự kiện của Leovian và đối tác.'), bt(L('View Events', 'Xem sự kiện'), "go('events')")])}</div></section>`
+            + lwh(3, 'band', `<div class="in"><span class="lab">${L('CONTACT', 'LIÊN HỆ')}</span><h2>${L('Explore New Possibilities Together.', 'Cùng mở ra cơ hội mới.')}</h2>${bt(L('Connect with Leovian', 'Kết nối với Leovian'), "go('contact')")}</div>`);
+        V.about = () => `<section class="cr" style="padding-top:68px" onmouseenter="hov=1" onmouseleave="hov=0" onfocusin="hov=1" onfocusout="hov=0" aria-label="Team"><div class="tr" id="tr">${[1, 2, 3, 4, 5].map(i => `<div class="sl">${ph('ABOUT US — TEAM MEMBER PORTRAIT').replace('class="ph"', 'class="ph pt"')}<div class="tx"><span class="lab">${L('Placeholder team member', 'Thành viên minh họa')} 0${i}</span><blockquote data-l="[ABOUT US — TEAM MEMBER QUOTE]" style="position:relative">“${L('One personal sentence about their vision, purpose, or contribution to Leovian.', 'Một câu về tầm nhìn, mục đích hoặc đóng góp cá nhân cho Leovian.')}”</blockquote><div class="nm">[${L('NAME', 'TÊN')} ${i}]</div><div class="rl">[${L('POSITION', 'CHỨC VỤ')}]</div></div></div>`).join('')}</div><div class="cc"><button onclick="car(-1)" aria-label="Previous">‹</button><button onclick="car(1)" aria-label="Next">›</button></div></section>`
+            + hd(L('ABOUT LEOVIAN', 'VỀ LEOVIAN'), L('Building Wealth. Empowering People.', 'Kiến tạo tài sản. Phát triển con người.'), L('Leovian is an ecosystem connecting investment, businesses, technology, assets and people. With a focus on Australia and Vietnam, we aim to build financial and human value that can grow across generations.', 'Leovian là hệ sinh thái kết nối đầu tư, doanh nghiệp, công nghệ, tài sản và con người. Với trọng tâm tại Úc và Việt Nam, chúng tôi hướng tới xây dựng giá trị tài chính và giá trị con người có thể phát triển qua nhiều thế hệ.'), 2)
+            + `<section class="sec"><div class="in"><span class="lab">${L('WHY LEOVIAN EXISTS', 'VÌ SAO LEOVIAN RA ĐỜI')}</span><p style="font:500 clamp(1.3rem,2.2vw,1.8rem)/1.4 'Cormorant Garamond',serif;color:var(--t);margin-top:12px;max-width:50em">${L('Leovian was founded on the belief that lasting prosperity begins with people who can create, manage and grow assets. Investing in people’s capabilities, mindset and sense of responsibility is therefore central to our approach.', 'Leovian được thành lập từ niềm tin rằng sự thịnh vượng bền vững bắt đầu từ những con người biết tạo dựng, quản lý và phát triển tài sản. Vì vậy, đầu tư vào năng lực, tư duy và trách nhiệm của con người là nền tảng trong định hướng của chúng tôi.')}</p><div class="cols">${[[L('OUR MISSION', 'SỨ MỆNH'), L('To develop people, assets, businesses and communities — building foundations that enable individuals and organisations to continue growing through their own capabilities.', 'Phát triển con người, tài sản, doanh nghiệp và cộng đồng — tạo nền tảng để mỗi cá nhân và tổ chức có thể tiếp tục phát triển bằng năng lực của mình.')], [L('OUR VISION', 'TẦM NHÌN'), L('To build an ecosystem where people and assets grow together, preserving, passing on and growing value across generations.', 'Xây dựng một hệ sinh thái nơi con người và tài sản cùng phát triển, để giá trị được gìn giữ, tiếp nối và gia tăng qua nhiều thế hệ.')]].map(x => `<div><h3>${x[0]}</h3><p>${x[1]}</p></div>`).join('')}</div></div></section><section class="sec alt"><div class="in"><span class="lab">${L('OUR PRINCIPLES', 'NGUYÊN TẮC CỦA CHÚNG TÔI')}</span><div class="cols">${[['Transparency', 'Minh bạch', 'Clarity in decisions and accountability in action.', 'Rõ ràng trong quyết định, trách nhiệm trong hành động.'], ['Long-Term Thinking', 'Dài hạn', 'A lasting commitment to sustainable value.', 'Kiên định với những giá trị bền vững.'], ['Meaningful Impact', 'Thực chất', 'Creating real value and positive outcomes.', 'Tạo giá trị thực và tác động tích cực.'], ['Continuity', 'Tiếp nối', 'Building foundations for future generations.', 'Xây dựng nền tảng cho các thế hệ sau.']].map(x => `<div><h3>${L(x[0], x[1])}</h3><p>${L(x[2], x[3])}</p></div>`).join('')}</div><br><br>${bt(L('Explore Our Ecosystem', 'Khám phá hệ sinh thái'), "go('ecosystem')")}</div></section>`;
+        V.ecosystem = () => hd(L('OUR ECOSYSTEM', 'HỆ SINH THÁI LEOVIAN'), L('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.'), L('Leovian builds an ecosystem that connects investment opportunities with business development solutions, fostering collaboration and creating a foundation for sustainable, long-term value across Australia and Vietnam.', 'Leovian xây dựng hệ sinh thái kết nối hoạt động đầu tư và các giải pháp phát triển doanh nghiệp, tạo nền tảng hợp tác và hướng tới giá trị bền vững tại Úc và Việt Nam.'), 3)
+            + lw(1, 'sec', `<div class="in"><span class="lab">01. ${L('INVESTMENT', 'ĐẦU TƯ')}</span><h2>${L('Investing in Potential. Creating Long-Term Value.', 'Đầu tư vào tiềm năng. Kiến tạo giá trị dài hạn.')}</h2><p style="color:var(--t)">${L('Leovian explores and develops investment opportunities across key sectors, connecting resources and partners to create sustainable value.', 'Leovian khám phá và phát triển các cơ hội đầu tư trong những lĩnh vực trọng điểm, kết nối nguồn lực và đối tác nhằm tạo dựng giá trị bền vững.')}</p>${cards(INV, 'i', 'ECOSYSTEM — INVESTMENT PROJECT PHOTO', ['#4a3818', '#3b2a1c', '#1f3340', '#2f3020'])}<br>${bt(L('Explore Investment Opportunities', 'Khám phá cơ hội đầu tư'), "go('contact')")}</div>`, 'inv')
+            + lw(2, 'sec', `<div class="in"><span class="lab">02. ${L('PARTNERSHIP', 'HỢP TÁC &amp; GIẢI PHÁP DOANH NGHIỆP')}</span><h2>${L('Connecting Expertise. Empowering Business Growth.', 'Kết nối chuyên môn. Đồng hành phát triển.')}</h2><p style="color:var(--t)">${L('Leovian brings together expertise, teams, and resources to support businesses in strategic planning, brand development, and operational execution.', 'Leovian kết nối đội ngũ, chuyên môn và nguồn lực để đồng hành cùng doanh nghiệp trong việc xây dựng chiến lược, phát triển thương hiệu và triển khai hoạt động kinh doanh.')}</p>${cards(PAR, 'p', 'ECOSYSTEM — PARTNERSHIP TEAM PHOTO', ['#2f3a3a', '#3b2a1c', '#2f3020'])}<br>${bt(L('Explore Partnership Solutions', 'Khám phá giải pháp hợp tác'), "go('contact')")}</div>`, 'par')
+            + lw(3, 'band', `<div class="in"><h2>${L('LET’S CREATE VALUE TOGETHER', 'CÙNG KIẾN TẠO GIÁ TRỊ')}</h2><p style="color:var(--t);margin-bottom:22px">${L('Whether you are exploring investment opportunities or seeking solutions to grow your business, Leovian is here to connect, collaborate, and explore the right opportunities with you.', 'Dù bạn đang tìm kiếm cơ hội đầu tư hay giải pháp phát triển doanh nghiệp, Leovian sẵn sàng kết nối và cùng bạn khám phá những hướng đi phù hợp.')}</p>${bt(L('Connect With Leovian', 'Kết nối với Leovian'), "go('contact')")}</div>`);
+        const evc = (i, past) => { const e = EV[i]; return `<article class="card"><div>${ph('EVENTS — EVENT COVER / GALLERY', ['#3b2a1c', '#1f3340', '#2f3020'][i % 3])}</div><div class="b"><span class="lab">${L(e[4], e[5])} · ${e[6]}</span><h3 style="margin-top:6px">${L(e[0], e[1])}</h3><p>${L(e[2], e[3])}</p><br><button class="btn" onclick="ev(${i})">${past ? L('View Gallery', 'Xem thư viện') : L('View Details', 'Xem chi tiết')}</button></div></article>` };
+        V.events = () => hd(L('EVENTS', 'SỰ KIỆN'), L('Connect. Collaborate. Grow Together.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), L('Discover events, networking opportunities, and collaborative experiences with Leovian across Australia and Vietnam.', 'Khám phá những sự kiện, hoạt động kết nối và cơ hội hợp tác cùng Leovian tại Úc và Việt Nam.'), 3) + `<section class="sec"><div class="in"><span class="lab">${L('UPCOMING EVENTS', 'SỰ KIỆN SẮP DIỄN RA')}</span><p style="margin-top:8px">${L('Stay informed about upcoming events and networking opportunities.', 'Cập nhật những sự kiện và chương trình kết nối sắp tới.')}</p><div class="g2">${[0, 1, 2].map(i => evc(i)).join('')}</div></div></section><section class="sec alt"><div class="in"><span class="lab">${L('PAST EVENTS', 'SỰ KIỆN ĐÃ DIỄN RA')}</span><p style="margin-top:8px">${L('Explore memorable moments, highlights, and activities from Leovian’s events and collaborations. (Demonstration data only.)', 'Nhìn lại những dấu ấn, khoảnh khắc và hoạt động nổi bật của Leovian cùng các đối tác. (Chỉ là dữ liệu minh họa.)')}</p><div class="g2">${[3, 4, 5].map(i => evc(i, 1)).join('')}</div></div></section>`;
+        const frm = (fields, btn) => `<form>${fields}<button class="btn" type="submit">${btn} ↗</button></form>`;
+        V.news = () => hd(L('NEWS &amp; INSIGHTS', 'TIN TỨC &amp; GÓC NHÌN'), L('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), L('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'), 1) + `<section class="sec"><div class="in"><p>${L('Placeholder layout. No real articles have been written yet.', 'Bố cục minh họa. Chưa có bài viết thật.')}</p><div class="g2">${[0, 1, 2].map(i => `<article class="card" tabindex="0"><div>${ph('NEWS — ARTICLE COVER', ['#4a3818', '#3b2a1c', '#2f3020'][i])}</div><div class="b"><h3>[${L('Placeholder article title', 'Tiêu đề bài viết minh họa')}]</h3><p>[${L('Short summary placeholder', 'Tóm tắt minh họa')}]</p></div></article>`).join('')}</div></div></section>`;
+        V.startuplab = () => hd(L('STARTUP LAB', 'KHÔNG GIAN KHỞI NGHIỆP'), L('Where Ideas Begin. Where Potential Grows.', 'Nơi ý tưởng bắt đầu. Nơi tiềm năng phát triển.'), L('Startup Lab is a space for connecting ideas, sharing knowledge, and exploring growth opportunities within the entrepreneurial communities of Australia and Vietnam.', 'Startup Lab là không gian kết nối ý tưởng, chia sẻ kiến thức và khám phá cơ hội phát triển dành cho cộng đồng khởi nghiệp tại Úc và Việt Nam.'), 2) + ph('STARTUP LAB — REAL TEAM BRAINSTORMING PHOTO', '#4a3818').replace('class="ph"', 'class="ph" style="height:40vh;min-height:260px"') + `<section class="sec"><div class="in"><div class="cols" style="margin-top:0">${[['IDEAS &amp; DISCUSSIONS', 'Ý TƯỞNG &amp; THẢO LUẬN', 'Share ideas, exchange perspectives, and explore new business opportunities.', 'Nơi chia sẻ ý tưởng, trao đổi góc nhìn và khám phá những cơ hội kinh doanh mới.'], ['KNOWLEDGE &amp; RESOURCES', 'KIẾN THỨC &amp; TÀI NGUYÊN', 'Discover practical insights, experiences, and resources to support your entrepreneurial journey.', 'Chia sẻ kiến thức, kinh nghiệm thực tiễn và tài liệu hữu ích cho hành trình khởi nghiệp.'], ['STARTUP STORIES', 'CÂU CHUYỆN KHỞI NGHIỆP', 'Explore entrepreneurial journeys, experiences, and lessons from founders and business communities.', 'Khám phá những hành trình, trải nghiệm và bài học từ cộng đồng doanh nhân và nhà sáng lập.']].map(x => `<div><h3 style="font-size:1.25rem;letter-spacing:.04em">${L(x[0], x[1])}</h3><p>${L(x[2], x[3])}</p></div>`).join('')}</div></div></section><section class="sec alt" id="idea"><div class="in" style="max-width:640px"><span class="lab">${L('CONNECT WITH US', 'KẾT NỐI CÙNG LEOVIAN')}</span><h2>${L('Have a business idea or looking to connect with the startup community?', 'Bạn có một ý tưởng kinh doanh hoặc mong muốn kết nối với cộng đồng khởi nghiệp?')}</h2><p style="margin-bottom:24px">${L('Prototype form: nothing is sent.', 'Biểu mẫu minh họa: không có dữ liệu nào được gửi.')}</p>${frm(F(L('Full Name', 'Họ và tên'), 'n') + F('Email', 'e', 'email') + `<label>${L('Your idea', 'Ý tưởng của bạn')}<textarea rows="4" required></textarea></label>`, L('Share Your Idea', 'Chia sẻ ý tưởng'))}</div></section>`;
+        V.contact = () => hd(L('CONTACT', 'LIÊN HỆ'), L('Start a Conversation. Explore New Possibilities.', 'Bắt đầu kết nối. Mở ra cơ hội.'), L('Get in touch to learn about the Leovian ecosystem or discuss your needs.', 'Liên hệ với Leovian để tìm hiểu về hệ sinh thái hoặc trao đổi nhu cầu của bạn.'), 3) + `<section class="sec"><div class="in"><div class="g2" style="gap:60px;margin-top:0"><div><span class="lab">${L('CONTACT DETAILS', 'THÔNG TIN LIÊN HỆ')}</span><h3 style="margin-top:10px">${L('Melbourne Office', 'Văn phòng Melbourne')}</h3><p>Ground Floor, 405 Collins Street, Melbourne VIC 3000, Australia</p><p>${L('Phone', 'Điện thoại')}: <a href="tel:+61405331876" style="color:var(--g2)">+61 405 331 876</a></p><p>Email: <a href="mailto:info@leovian.com.au" style="color:var(--g2)">info@leovian.com.au</a></p><p>Website: <a href="https://www.leovian.com.au" target="_blank" rel="noopener" style="color:var(--g2)">www.leovian.com.au</a></p></div><div><span class="lab">${L('SEND US A MESSAGE', 'GỬI LỜI NHẮN')}</span><br><br>${frm(F(L('Full name', 'Họ và tên'), 'n') + F('Email', 'e', 'email') + `<label>${L('Phone number (optional)', 'Số điện thoại (không bắt buộc)')}<input type="tel"></label><label>${L('Area of interest', 'Chủ đề quan tâm')}<select>${[['Education & Careers', 'Giáo dục & Nghề nghiệp'], ['Real Estate & Assets', 'Bất động sản & Tài sản'], ['Business Advisory & Startups', 'Tư vấn doanh nghiệp & Khởi nghiệp'], ['Other', 'Khác']].map(o => `<option>${L(o[0], o[1])}</option>`).join('')}</select></label><label>${L('Your message', 'Nội dung lời nhắn')}<textarea rows="4" required></textarea></label>`, L('Send Message', 'Gửi lời nhắn'))}</div></div></div></section>`;
+        function nav() {
+            $('#nav').innerHTML = `<a class="logo" href="#home">LEOVIAN</a><button class="mb" onclick="$('#nav').classList.toggle('open')" aria-label="Menu">☰</button><div class="nl">` + N.map(([k, e, v]) => k == 'ecosystem' ? `<div class="dd"><a href="#ecosystem" class="${page == k ? 'cur' : ''}">${L(e, v)} ▾</a><div class="menu"><div><b>${L('Investment', 'Đầu tư')}</b>${INV.map((x, i) => `<a href="#ecosystem" onclick="go('ecosystem','i${i}');return false">${L(x[0], x[1])}</a>`).join('')}</div><div><b>${L('Partnership', 'Đối tác')}</b>${PAR.map((x, i) => `<a href="#ecosystem" onclick="go('ecosystem','p${i}');return false">${L(x[0], x[1])}</a>`).join('')}</div></div></div>` : `<a href="#${k}" class="${page == k ? 'cur' : ''}">${L(e, v)}</a>`).join('') + `<span class="lg"><button class="${lang == 'en' ? 'on' : ''}" onclick="setLang('en')">EN</button> / <button class="${lang == 'vi' ? 'on' : ''}" onclick="setLang('vi')">VI</button></span></div>`;
+            $('#talk').textContent = L('Talk to Our Team', 'Trò chuyện cùng đội ngũ'); $('#nt').textContent = L('Design Notes', 'Ghi chú thiết kế');
+            $('#ft').innerHTML = L('Design prototype — all content, people, events and contact details are placeholders pending Leovian approval.', 'Bản thiết kế mẫu — mọi nội dung, nhân sự, sự kiện và thông tin liên hệ đều là minh họa, chờ Leovian xác nhận.')
+        }
+        function render(keep) {
+            clearInterval(T1); clearInterval(T2); $('#nav').classList.remove('open'); $('#app').innerHTML = V[page](); nav(); document.documentElement.lang = lang;
+            if (page == 'about') { ci = 0; if (!RM) T2 = setInterval(() => { hov || car(1) }, 6000) }
+            if (page == 'home') rv(); if (!keep) { const e = sec && document.getElementById(sec); e ? e.scrollIntoView() : scrollTo(0, 0) } sec = null
+        }
+        function scene(i) { cur = i; document.querySelectorAll('.sc').forEach((e, j) => e.classList.toggle('on', j == i)); const p = document.querySelectorAll('.pi'); p.forEach(e => e.classList.remove('on')); void document.body.offsetWidth; p[i].classList.add('on'); const s = SC[i]; $('#cap').textContent = `LOOP 0${i + 1} — ${s[0]} / ${s[1]}. ${L(s[2], s[3])}`; clearInterval(T1); const pa = $('#hero').classList.contains('paused') || (RM && !$('#hero').dataset.go); if (!pa) T1 = setInterval(() => scene((cur + 1) % 4), 6000); ppl() }
+        function ppl() { const h = $('#hero'); if (h && RM && !h.dataset.go) h.classList.add('paused'); $('#pp').textContent = h.classList.contains('paused') ? '▶ ' + L('Play', 'Phát') : '❚❚ ' + L('Pause', 'Dừng') }
+        function pp() { const h = $('#hero'); h.dataset.go = 1; h.classList.toggle('paused'); scene(cur) }
+        function car(d) { ci = (ci + d + 5) % 5; $('#tr').style.transform = `translateX(-${ci * 100}%)` }
+        function ev(i) { const e = EV[i]; $('#dlg').innerHTML = `<span class="lab">${L(e[4], e[5])} · ${e[6]}</span><h3 style="margin:8px 0">${L(e[0], e[1])}</h3><p>${L(e[2], e[3])}</p><br><p style="font-size:13px">${L('Demonstration data — not a real Leovian event.', 'Dữ liệu minh họa — không phải sự kiện thật của Leovian.')}</p><br><button class="btn" onclick="$('#dlg').close()">${L('Close', 'Đóng')}</button>`; $('#dlg').showModal() }
+        function go(p, s) { sec = s || null; document.activeElement.blur(); if (location.hash == '#' + p || (!location.hash && p == 'home')) render(); else location.hash = p }
+        function setLang(l) { lang = l; const y = scrollY; render(1); scrollTo(0, y) }
+        addEventListener('hashchange', () => { const h = location.hash.slice(1); page = V[h] ? h : 'home'; render() });
+        document.addEventListener('submit', e => { e.preventDefault(); e.target.innerHTML = `<p class="ok">${L('Thank you. This is a prototype confirmation; no data was sent.', 'Cảm ơn bạn. Đây là xác nhận mô phỏng; không có dữ liệu nào được gửi.')}</p>` });
+        $('#talk').onclick = () => go('contact'); $('#nt').onclick = () => { $('#nt').setAttribute('aria-pressed', document.body.classList.toggle('notes')) };
+        page = V[location.hash.slice(1)] ? location.hash.slice(1) : 'home'; render();
+    </script>
+</body>
+
+</html>
