@@ -9,6 +9,8 @@
     <title>Leovian — Investment & Business Development Ecosystem</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://videos.pexels.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -63,7 +65,10 @@
             overflow: hidden
         }
 
-        svg {
+        svg,
+        img,
+        video,
+        iframe {
             display: block
         }
 
@@ -427,7 +432,7 @@
             height: var(--uh);
             border-bottom: 1px solid rgba(58, 50, 38, .55);
             font-size: 12px;
-            color: var(--t3);
+            color: var(--t2);
             transition: margin-top .4s var(--ease)
         }
 
@@ -509,7 +514,7 @@
             padding: 14px 0;
             font: 500 13.5px/1 var(--sans);
             letter-spacing: .02em;
-            color: var(--t2);
+            color: var(--t1);
             transition: color .25s
         }
 
@@ -580,17 +585,38 @@
         }
 
         .mega-intro {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
             align-items: flex-start;
             gap: 14px;
-            padding: 32px;
-            background: var(--bg);
+            min-height: 260px;
+            padding: 28px;
             border-right: 1px solid var(--ln2)
         }
 
+        .mega-intro img {
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .mega-intro::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(0deg, rgba(13, 13, 13, .95) 20%, rgba(13, 13, 13, .45))
+        }
+
         .mega-intro p {
-            font: 500 1.45rem/1.25 var(--serif);
+            font: 500 1.4rem/1.25 var(--serif);
             color: var(--t)
         }
 
@@ -692,30 +718,37 @@
             transform: translateY(-7px) rotate(-45deg)
         }
 
-        /* ========== Animated backgrounds ========== */
+        /* ========== Photo & video media ========== */
         .bgfx {
             position: absolute;
             inset: 0;
             z-index: -2;
-            overflow: hidden
+            overflow: hidden;
+            background: var(--bg)
         }
 
-        .bgfx>i {
+        .bgfx img,
+        .bgfx video {
             position: absolute;
-            inset: -6%;
-            display: block;
-            animation: kb 14s ease-in-out infinite alternate
-        }
-
-        .bgfx svg {
+            inset: 0;
             width: 100%;
-            height: 100%
+            height: 100%;
+            object-fit: cover
         }
 
-        @keyframes kb {
-            to {
-                transform: scale(1.08) translate(-1.5%, -1%)
-            }
+        .bgfx video {
+            opacity: 0;
+            transition: opacity 1.4s ease
+        }
+
+        .bgfx video.on {
+            opacity: 1
+        }
+
+        .bgfx img,
+        .bgfx video,
+        .ph img {
+            filter: saturate(.82) contrast(1.04)
         }
 
         .shade {
@@ -724,121 +757,69 @@
             z-index: -1;
             pointer-events: none;
             background:
-                linear-gradient(180deg, rgba(13, 13, 13, .72) 0%, rgba(13, 13, 13, 0) 24%),
-                linear-gradient(0deg, var(--bg) 0%, rgba(13, 13, 13, 0) 34%),
-                linear-gradient(90deg, rgba(13, 13, 13, .96) 0%, rgba(13, 13, 13, .84) 38%, rgba(13, 13, 13, .38) 74%, rgba(13, 13, 13, .26) 100%)
+                linear-gradient(180deg, rgba(13, 13, 13, .7) 0%, rgba(13, 13, 13, 0) 26%),
+                linear-gradient(0deg, var(--bg) 0%, rgba(13, 13, 13, 0) 38%),
+                linear-gradient(90deg, rgba(13, 13, 13, .92) 0%, rgba(13, 13, 13, .74) 40%, rgba(13, 13, 13, .32) 78%, rgba(13, 13, 13, .22) 100%)
         }
 
-        .bd {
-            transform-box: fill-box;
-            transform-origin: bottom;
-            animation: grow 9s ease-in-out infinite
+        .ph {
+            position: relative;
+            overflow: hidden;
+            background: var(--bg2)
         }
 
-        @keyframes grow {
-            0% {
-                transform: scaleY(0)
-            }
-
-            30%,
-            85% {
-                transform: scaleY(1)
-            }
-
-            100% {
-                transform: scaleY(0)
-            }
+        .ph img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
         }
 
-        .ln1 {
-            stroke-dasharray: 2000;
-            animation: draw 9s ease-in-out infinite
+        .ph.portrait {
+            aspect-ratio: 4/5;
+            border: 1px solid var(--ln2)
         }
 
-        @keyframes draw {
-            0% {
-                stroke-dashoffset: 2000
-            }
-
-            50%,
-            90% {
-                stroke-dashoffset: 0
-            }
-
-            100% {
-                stroke-dashoffset: 2000
-            }
+        .ph.portrait img {
+            filter: grayscale(1) contrast(1.06) brightness(.94)
         }
 
-        .fg {
-            animation: bob 5s ease-in-out infinite alternate
+        .ph.wide {
+            height: clamp(260px, 40vw, 520px);
+            border: 1px solid var(--ln2)
         }
 
-        @keyframes bob {
-            to {
-                transform: translateY(-24px)
-            }
+        [data-l]::after {
+            display: none;
+            content: attr(data-l);
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            z-index: 5;
+            padding: 4px 8px;
+            background: rgba(13, 13, 13, .88);
+            border: 1px dashed var(--g);
+            font: 500 10px/1.3 var(--sans);
+            letter-spacing: .08em;
+            color: var(--g2);
+            font-style: normal
         }
 
-        .rp {
-            transform-box: fill-box;
-            transform-origin: center;
-            animation: rip 6.6s ease-out infinite
+        .notes [data-l]::after {
+            display: block
         }
 
-        @keyframes rip {
-            from {
-                transform: scale(.6);
-                opacity: .8
-            }
-
-            to {
-                transform: scale(2.6);
-                opacity: 0
-            }
+        .tag-top::after {
+            left: auto;
+            right: 12px;
+            bottom: auto;
+            top: calc(var(--uh) + var(--hh) + 14px)
         }
 
-        .sun {
-            animation: sunr 8s ease-in-out infinite alternate
-        }
-
-        @keyframes sunr {
-            from {
-                transform: translateY(70px)
-            }
-
-            to {
-                transform: translateY(0)
-            }
-        }
-
-        .lk,
-        .lk2 {
-            animation: lk 6s ease-in-out infinite alternate
-        }
-
-        .lk2 {
-            animation-name: lk2
-        }
-
-        @keyframes lk {
-            from {
-                transform: translateX(-46px)
-            }
-
-            to {
-                transform: translateX(0)
-            }
-        }
-
-        @keyframes lk2 {
-            from {
-                transform: translateX(46px)
-            }
-
-            to {
-                transform: translateX(0)
-            }
+        .tag-tr::after {
+            left: auto;
+            right: 12px;
+            bottom: auto;
+            top: 12px
         }
 
         /* ========== Hero ========== */
@@ -852,6 +833,7 @@
         }
 
         .hero-in {
+            position: relative;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -873,6 +855,40 @@
         .hero .lead {
             max-width: 54ch;
             margin-bottom: 40px
+        }
+
+        .hero-loc {
+            position: absolute;
+            right: var(--gut);
+            bottom: 64px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font: 500 11px/1 var(--sans);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--t1)
+        }
+
+        .hero-loc .ic {
+            color: var(--g)
+        }
+
+        .hero-loc i {
+            display: flex;
+            gap: 6px;
+            margin-left: 8px
+        }
+
+        .hero-loc b {
+            width: 18px;
+            height: 2px;
+            background: rgba(245, 240, 232, .25);
+            transition: background-color .5s
+        }
+
+        .hero-loc b.on {
+            background: var(--g)
         }
 
         @keyframes rise {
@@ -909,7 +925,7 @@
         .stats {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr)) 64px;
-            border-top: 1px solid var(--ln);
+            border-top: 1px solid rgba(200, 166, 106, .35);
             animation: rise 1.1s .6s var(--ease) both
         }
 
@@ -922,7 +938,7 @@
 
         .stat+.stat {
             padding-left: 32px;
-            border-left: 1px solid var(--ln2)
+            border-left: 1px solid rgba(58, 50, 38, .8)
         }
 
         .stat b {
@@ -940,7 +956,7 @@
             display: block;
             margin-top: 4px;
             font-size: 12.5px;
-            color: var(--t3)
+            color: var(--t2)
         }
 
         .cue {
@@ -1005,7 +1021,7 @@
             font-size: 11.5px;
             letter-spacing: .16em;
             text-transform: uppercase;
-            color: var(--t3)
+            color: var(--t2)
         }
 
         .crumb a {
@@ -1041,6 +1057,67 @@
             color: var(--g2)
         }
 
+        .markets {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: clamp(56px, 7vw, 88px)
+        }
+
+        .market {
+            position: relative;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            border: 1px solid var(--ln2)
+        }
+
+        .market .ph {
+            position: absolute;
+            inset: 0
+        }
+
+        .market .ph img,
+        .media .ph img,
+        .pane-media img,
+        .pillar .bgfx img {
+            transition: transform 1.4s var(--ease)
+        }
+
+        .market:hover .ph img,
+        .card:hover .media .ph img,
+        .pane:hover .pane-media img,
+        .pillar:hover .bgfx img {
+            transform: scale(1.04)
+        }
+
+        .market figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            padding: 64px 28px 24px;
+            background: linear-gradient(0deg, rgba(13, 13, 13, .92), rgba(13, 13, 13, 0))
+        }
+
+        .market figcaption span {
+            font: 500 clamp(1.5rem, 2.2vw, 1.9rem)/1.1 var(--serif);
+            color: var(--t)
+        }
+
+        .market figcaption small {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font: 500 11px/1 var(--sans);
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--g)
+        }
+
         .pillars {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1051,20 +1128,11 @@
             position: relative;
             isolation: isolate;
             overflow: hidden;
-            min-height: clamp(400px, 40vw, 500px);
+            min-height: clamp(420px, 42vw, 520px);
             display: flex;
             align-items: flex-end;
             background: var(--bg);
             border: 1px solid var(--ln2)
-        }
-
-        .pillar .bgfx {
-            opacity: .65;
-            transition: opacity .6s
-        }
-
-        .pillar:hover .bgfx {
-            opacity: .85
         }
 
         .pillar::before {
@@ -1072,7 +1140,7 @@
             position: absolute;
             inset: 0;
             z-index: -1;
-            background: linear-gradient(0deg, var(--bg) 12%, rgba(13, 13, 13, .55) 58%, rgba(13, 13, 13, .12))
+            background: linear-gradient(0deg, rgba(13, 13, 13, .96) 18%, rgba(13, 13, 13, .5) 58%, rgba(13, 13, 13, .1))
         }
 
         .pillar-in {
@@ -1084,22 +1152,43 @@
             font-size: clamp(1.6rem, 2.2vw, 2rem)
         }
 
+        .pillar p {
+            color: var(--t1)
+        }
+
         .pane {
             position: relative;
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            padding: clamp(32px, 4vw, 52px);
+            overflow: hidden;
             background: var(--bg2);
             border: 1px solid var(--ln2)
+        }
+
+        .pane-media {
+            position: relative;
+            aspect-ratio: 16/8;
+            overflow: hidden;
+            border-bottom: 1px solid var(--ln2)
+        }
+
+        .pane-media .ph {
+            position: absolute;
+            inset: 0
+        }
+
+        .pane-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: clamp(28px, 3.6vw, 48px)
         }
 
         .pane-hd {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding-bottom: 22px;
-            border-bottom: 1px solid var(--ln2)
+            justify-content: space-between
         }
 
         .pane-tag {
@@ -1122,7 +1211,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 16px 0;
+            padding: 15px 0;
             border-bottom: 1px solid var(--ln2);
             color: var(--t);
             transition: color .25s, padding .35s var(--ease)
@@ -1160,16 +1249,12 @@
             position: relative;
             isolation: isolate;
             overflow: hidden;
-            padding: clamp(110px, 14vw, 180px) 0;
+            padding: clamp(120px, 15vw, 200px) 0;
             border-top: 1px solid var(--ln2)
         }
 
-        .band .bgfx {
-            opacity: .85
-        }
-
         .band .shade {
-            background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(13, 13, 13, .88), rgba(13, 13, 13, .55) 70%, rgba(13, 13, 13, .72))
+            background: radial-gradient(ellipse 75% 85% at 50% 50%, rgba(13, 13, 13, .82), rgba(13, 13, 13, .55) 72%, rgba(13, 13, 13, .7))
         }
 
         .band-in {
@@ -1262,12 +1347,7 @@
 
         .media .ph {
             position: absolute;
-            inset: 0;
-            transition: transform 1.2s var(--ease)
-        }
-
-        .card:hover .media .ph {
-            transform: scale(1.05)
+            inset: 0
         }
 
         .card .body {
@@ -1354,88 +1434,6 @@
             animation: flash 2.4s ease
         }
 
-        /* ========== Placeholders ========== */
-        .ph {
-            position: relative;
-            overflow: hidden;
-            background:
-                radial-gradient(90% 80% at 72% 24%, var(--c, #2b2418) 0%, transparent 70%),
-                repeating-linear-gradient(135deg, rgba(200, 166, 106, .05) 0 1px, transparent 1px 16px),
-                linear-gradient(160deg, #181715, #0e0e0d)
-        }
-
-        .ph::before {
-            content: '';
-            position: absolute;
-            inset: 14px;
-            border: 1px solid rgba(200, 166, 106, .12);
-            pointer-events: none
-        }
-
-        .ph>.ic {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 44px;
-            height: 44px;
-            margin: -22px 0 0 -22px;
-            color: var(--g);
-            opacity: .4;
-            stroke-width: 1.1
-        }
-
-        .ph.pt {
-            aspect-ratio: 4/5;
-            background:
-                radial-gradient(circle at 50% 38%, #3a3020 0 12%, transparent 12.5%),
-                radial-gradient(ellipse at 50% 100%, #3a3020 0 40%, transparent 40.5%),
-                radial-gradient(90% 70% at 50% 30%, #221d15, #121110)
-        }
-
-        .ph.wide {
-            height: clamp(240px, 38vw, 460px);
-            border: 1px solid var(--ln2)
-        }
-
-        .ph.map {
-            aspect-ratio: 16/9;
-            border: 1px solid var(--ln2)
-        }
-
-        [data-l]::after {
-            display: none;
-            content: attr(data-l);
-            position: absolute;
-            left: 12px;
-            bottom: 12px;
-            z-index: 5;
-            padding: 4px 8px;
-            background: rgba(13, 13, 13, .88);
-            border: 1px dashed var(--g);
-            font: 500 10px/1.3 var(--sans);
-            letter-spacing: .08em;
-            color: var(--g2);
-            font-style: normal
-        }
-
-        .notes [data-l]::after {
-            display: block
-        }
-
-        .tag-top::after {
-            left: auto;
-            right: 12px;
-            bottom: auto;
-            top: calc(var(--uh) + var(--hh) + 14px)
-        }
-
-        .tag-tr::after {
-            left: auto;
-            right: 12px;
-            bottom: auto;
-            top: 12px
-        }
-
         /* ========== About ========== */
         .statement {
             max-width: none;
@@ -1507,10 +1505,6 @@
             grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
             gap: clamp(32px, 6vw, 96px);
             align-items: center
-        }
-
-        .slide .ph {
-            border: 1px solid var(--ln2)
         }
 
         .slide blockquote {
@@ -1626,30 +1620,27 @@
 
         .ev {
             display: grid;
-            grid-template-columns: 210px minmax(0, 1fr) 230px auto;
-            gap: 32px;
+            grid-template-columns: 260px minmax(0, 1fr) auto;
+            gap: 40px;
             align-items: center;
-            padding: 36px 0;
+            padding: 32px 0;
             border-bottom: 1px solid var(--ln2)
         }
 
-        .ev-date,
-        .ev-loc {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--t2);
-            font-size: 13.5px
+        .ev-media {
+            position: relative;
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            border: 1px solid var(--ln2)
         }
 
-        .ev-date {
-            font: 500 1.2rem/1.2 var(--serif);
-            color: var(--g2)
+        .ev-media .ph {
+            position: absolute;
+            inset: 0
         }
 
-        .ev-date .ic,
-        .ev-loc .ic {
-            color: var(--g)
+        .ev .meta {
+            margin-bottom: 12px
         }
 
         .ev h3 {
@@ -1837,6 +1828,27 @@
 
         .clist a:hover {
             color: var(--t)
+        }
+
+        .map {
+            position: relative;
+            aspect-ratio: 16/11;
+            overflow: hidden;
+            background: var(--bg2);
+            border: 1px solid var(--ln2)
+        }
+
+        .map iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(1) invert(.92) contrast(.88) brightness(.92)
+        }
+
+        .map-link {
+            margin-top: 10px
         }
 
         .panel {
@@ -2253,24 +2265,17 @@
             }
 
             .pillar {
-                min-height: 340px
+                min-height: 380px
             }
 
             .ev {
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: 16px 32px
-            }
-
-            .ev-date,
-            .ev-main,
-            .ev-loc {
-                grid-column: 1
+                grid-template-columns: 200px minmax(0, 1fr);
+                gap: 20px 32px
             }
 
             .ev .btn {
                 grid-column: 2;
-                grid-row: 1 / span 3;
-                align-self: center
+                justify-self: start
             }
 
             .ft-top {
@@ -2309,8 +2314,13 @@
                 aspect-ratio: 16/10
             }
 
-            .slide .ph.pt {
+            .slide .ph.portrait {
                 max-width: 360px
+            }
+
+            .hero-loc {
+                position: static;
+                margin-top: 40px
             }
         }
 
@@ -2340,12 +2350,13 @@
 
             .g2,
             .g4,
-            .fgrid {
+            .fgrid,
+            .markets {
                 grid-template-columns: 1fr
             }
 
             .shade {
-                background: linear-gradient(0deg, var(--bg) 0%, rgba(13, 13, 13, .8) 45%, rgba(13, 13, 13, .62))
+                background: linear-gradient(0deg, var(--bg) 0%, rgba(13, 13, 13, .78) 45%, rgba(13, 13, 13, .58))
             }
 
             .stats {
@@ -2379,7 +2390,6 @@
 
             .ev .btn {
                 grid-column: 1;
-                grid-row: auto;
                 justify-self: start
             }
 
@@ -2417,20 +2427,8 @@
                 transition-duration: .001ms !important
             }
 
-            .bgfx>i,
-            .bd,
-            .ln1,
-            .fg,
-            .rp,
-            .sun,
-            .lk,
-            .lk2,
             .cue i::after {
                 animation: none !important
-            }
-
-            .ln1 {
-                stroke-dashoffset: 0
             }
 
             .rv {
@@ -2453,10 +2451,42 @@
         const $ = (s, r = document) => r.querySelector(s);
         const $$ = (s, r = document) => [...r.querySelectorAll(s)];
         const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        let lang = 'vi', page = 'home', target = null, teamIdx = 0, booted = false, io;
+        // Skip background video when the visitor asked for less motion or less data.
+        const LITE = RM || Boolean(navigator.connection && navigator.connection.saveData);
+        let lang = 'vi', page = 'home', target = null, teamIdx = 0, booted = false, io, vio, hio;
         const t = (en, vi) => lang === 'vi' ? vi : en;
         const tx = a => lang === 'vi' ? a[1] : a[0];
         const pad = n => String(n).padStart(2, '0');
+
+        /* ---------- Stock media (Unsplash photos, Pexels videos — swap for Leovian's own) ---------- */
+        const U = (id, w = 1200, extra = '') => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=72${extra}`;
+        const PX = path => `https://videos.pexels.com/video-files/${path}.mp4`;
+        const HERO = {
+            poster: '1610183880843-52fc754207a8',
+            clips: [
+                { hd: '8949611/8949611-hd_1920_1080_25fps', sd: '8949611/8949611-sd_960_540_25fps', place: ['Melbourne, Australia', 'Melbourne, Úc'] },
+                { hd: '31111825/13294162_1920_1080_30fps', sd: '31111825/13294158_960_540_30fps', place: ['Ho Chi Minh City, Vietnam', 'TP. Hồ Chí Minh, Việt Nam'] }
+            ]
+        };
+        const HEAD_MEDIA = {
+            about: { img: '1517048676732-d65bc937f952', vid: '7659850/7659850-hd_1280_720_25fps' },
+            ecosystem: { img: '1602559227639-3bba8ce496df', vid: '13072844/13072844-hd_1280_720_30fps' },
+            news: { img: '1504711434969-e33886168f5c' },
+            startuplab: { img: '1532622785990-d2c36a76f5a6', vid: '7693469/7693469-hd_1280_720_25fps' },
+            events: { img: '1540575467063-178a50c2df87', vid: '8716442/8716442-hd_1280_720_25fps' },
+            contact: { img: '1626585817768-86826f5a9179', vid: '39014384/16601940_1280_720_24fps' }
+        };
+        const BAND_MEDIA = {
+            home: { img: '1521791136064-7986c2920216', vid: '7692917/7692917-hd_1280_720_25fps' },
+            about: { img: '1609726105601-497455c14c97', vid: '8949613/8949613-hd_1280_720_25fps' },
+            ecosystem: { img: '1600880292203-757bb62b4baf', vid: '5311422/5311422-hd_1280_720_25fps' }
+        };
+        const MARKETS = [
+            { img: '1595434971780-79d5c20c5090', place: ['Melbourne', 'Melbourne'], country: ['Australia', 'Úc'] },
+            { img: '1583417319070-4a69db38a482', place: ['Ho Chi Minh City', 'TP. Hồ Chí Minh'], country: ['Vietnam', 'Việt Nam'] }
+        ];
+        const TEAM_IMG = ['1543132220-4bf3de6e10ae', '1581065178047-8ee15951ede6', '1544168190-79c17527004f', '1622626426572-c268eb006092', '1640531005390-38bd92755d6a'];
+        const NEWS_IMG = ['1555476246-0f72183ae174', '1517245386807-bb43f82c33c4', '1579532536935-619928decd08'];
 
         /* ---------- Icons ---------- */
         const ICON = {
@@ -2482,7 +2512,6 @@
             globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/>',
             cal: '<rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
             chat: '<path d="M20.5 11.5a8 8 0 0 1-11.8 7L4 19.5l1.1-4.3A8 8 0 1 1 20.5 11.5z"/>',
-            doc: '<path d="M6 3h9l4 4v14H6z"/><path d="M14.5 3v4.5H19M9 12h7M9 15.5h7M9 8.5h3"/>',
             target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
             eye: '<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
             idea: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.8 10.6c.7.6 1 1.4 1 2.4h5.6c0-1 .3-1.8 1-2.4A6 6 0 0 0 12 3z"/>',
@@ -2504,24 +2533,24 @@
             { k: 'contact', t: ['Contact', 'Liên hệ'], m: 1 }
         ];
         const INV = [
-            { ic: 'edu', c: '#4a3818', t: ['Education', 'Giáo dục'], d: ['Connecting investment and development opportunities in education, training, and human capability building.', 'Kết nối các cơ hội đầu tư và phát triển trong lĩnh vực giáo dục, đào tạo và nâng cao năng lực con người.'] },
-            { ic: 'estate', c: '#3b2a1c', t: ['Real Estate', 'Bất động sản'], d: ['Exploring real estate investment and development opportunities with a focus on long-term asset value.', 'Khám phá các cơ hội đầu tư và phát triển bất động sản, hướng tới xây dựng giá trị tài sản dài hạn.'] },
-            { ic: 'tech', c: '#1f3340', t: ['Technology', 'Công nghệ'], d: ['Exploring innovative technology projects and solutions with potential for practical application and growth.', 'Hướng tới các dự án và giải pháp công nghệ có tiềm năng ứng dụng, đổi mới và phát triển.'] },
-            { ic: 'health', c: '#2f3020', t: ['Health', 'Sức khỏe'], d: ['Exploring opportunities in healthcare and wellbeing that contribute to improving quality of life.', 'Khám phá các cơ hội trong lĩnh vực chăm sóc sức khỏe, hướng tới nâng cao chất lượng cuộc sống.'] }
+            { ic: 'edu', img: '1514513452089-17f8a9771ee8', t: ['Education', 'Giáo dục'], d: ['Connecting investment and development opportunities in education, training, and human capability building.', 'Kết nối các cơ hội đầu tư và phát triển trong lĩnh vực giáo dục, đào tạo và nâng cao năng lực con người.'] },
+            { ic: 'estate', img: '1624204386084-dd8c05e32226', t: ['Real Estate', 'Bất động sản'], d: ['Exploring real estate investment and development opportunities with a focus on long-term asset value.', 'Khám phá các cơ hội đầu tư và phát triển bất động sản, hướng tới xây dựng giá trị tài sản dài hạn.'] },
+            { ic: 'tech', img: '1534665482403-a909d0d97c67', t: ['Technology', 'Công nghệ'], d: ['Exploring innovative technology projects and solutions with potential for practical application and growth.', 'Hướng tới các dự án và giải pháp công nghệ có tiềm năng ứng dụng, đổi mới và phát triển.'] },
+            { ic: 'health', img: '1758691461990-03b49d969495', t: ['Health', 'Sức khỏe'], d: ['Exploring opportunities in healthcare and wellbeing that contribute to improving quality of life.', 'Khám phá các cơ hội trong lĩnh vực chăm sóc sức khỏe, hướng tới nâng cao chất lượng cuộc sống.'] }
         ];
         const PAR = [
-            { ic: 'consult', c: '#2f3a3a', t: ['Business Consulting', 'Tư vấn doanh nghiệp'], d: ['Supporting businesses in developing strategies, refining business models, and identifying growth opportunities tailored to each stage of development.', 'Hỗ trợ doanh nghiệp xây dựng chiến lược, phát triển mô hình kinh doanh và xác định định hướng tăng trưởng phù hợp với từng giai đoạn.'] },
-            { ic: 'market', c: '#3b2a1c', t: ['Marketing', 'Giải pháp Marketing'], d: ['Supporting brand development, content creation, communications, and the execution of marketing campaigns aligned with business objectives.', 'Hỗ trợ xây dựng thương hiệu, phát triển nội dung, truyền thông và triển khai các chiến dịch marketing phù hợp với mục tiêu doanh nghiệp.'] },
-            { ic: 'ops', c: '#2f3020', t: ['O System (Operation System)', 'O System — Giải pháp vận hành'], d: ['Supporting businesses in organising, executing, and managing business activities through dedicated expertise and operational resources.', 'Hỗ trợ doanh nghiệp tổ chức, triển khai và vận hành các hoạt động kinh doanh thông qua đội ngũ chuyên môn và nguồn lực phù hợp.'] }
+            { ic: 'consult', img: '1454165804606-c3d57bc86b40', t: ['Business Consulting', 'Tư vấn doanh nghiệp'], d: ['Supporting businesses in developing strategies, refining business models, and identifying growth opportunities tailored to each stage of development.', 'Hỗ trợ doanh nghiệp xây dựng chiến lược, phát triển mô hình kinh doanh và xác định định hướng tăng trưởng phù hợp với từng giai đoạn.'] },
+            { ic: 'market', img: '1557804506-669a67965ba0', t: ['Marketing', 'Giải pháp Marketing'], d: ['Supporting brand development, content creation, communications, and the execution of marketing campaigns aligned with business objectives.', 'Hỗ trợ xây dựng thương hiệu, phát triển nội dung, truyền thông và triển khai các chiến dịch marketing phù hợp với mục tiêu doanh nghiệp.'] },
+            { ic: 'ops', img: '1519389950473-47ba0277781c', t: ['O System (Operation System)', 'O System — Giải pháp vận hành'], d: ['Supporting businesses in organising, executing, and managing business activities through dedicated expertise and operational resources.', 'Hỗ trợ doanh nghiệp tổ chức, triển khai và vận hành các hoạt động kinh doanh thông qua đội ngũ chuyên môn và nguồn lực phù hợp.'] }
         ];
         const PURPOSE = [
-            { t: ['Building Wealth', 'Kiến tạo tài sản'], d: ['Building wealth through vision and strategic decisions.', 'Kiến tạo tài sản bằng tầm nhìn và những quyết định chiến lược.'] },
-            { t: ['Empowering People', 'Phát triển con người'], d: ['Investing in people as the foundation of long-term growth.', 'Đầu tư vào con người là nền tảng của tăng trưởng dài hạn.'] },
-            { t: ['Creating Lasting Value', 'Tạo giá trị bền vững'], d: ['Creating sustainable value through meaningful, long-term collaboration.', 'Tạo giá trị bền vững qua hợp tác ý nghĩa và lâu dài.'] }
+            { img: '1486406146926-c627a92ad1ab', t: ['Building Wealth', 'Kiến tạo tài sản'], d: ['Building wealth through vision and strategic decisions.', 'Kiến tạo tài sản bằng tầm nhìn và những quyết định chiến lược.'] },
+            { img: '1511376979163-f804dff7ad7b', t: ['Empowering People', 'Phát triển con người'], d: ['Investing in people as the foundation of long-term growth.', 'Đầu tư vào con người là nền tảng của tăng trưởng dài hạn.'] },
+            { img: '1585813597616-63e881759e9d', t: ['Creating Lasting Value', 'Tạo giá trị bền vững'], d: ['Creating sustainable value through meaningful, long-term collaboration.', 'Tạo giá trị bền vững qua hợp tác ý nghĩa và lâu dài.'] }
         ];
         const PANES = [
-            { tag: ['Investment', 'Đầu tư'], h: ['Investing in Potential. Creating Long-Term Value.', 'Đầu tư vào tiềm năng. Kiến tạo giá trị dài hạn.'], d: ['Explore Leovian’s investment direction and approach to long-term value creation.', 'Khám phá định hướng đầu tư và phát triển giá trị dài hạn trong hệ sinh thái Leovian.'], items: INV, pre: 'i', sec: 'inv', cta: ['Explore Investment', 'Tìm hiểu mảng Đầu tư'] },
-            { tag: ['Partnership', 'Hợp tác'], h: ['Connecting Expertise. Empowering Business Growth.', 'Kết nối chuyên môn. Đồng hành phát triển.'], d: ['Explore connections and collaboration within the Leovian ecosystem.', 'Khám phá hướng kết nối và hợp tác trong hệ sinh thái Leovian.'], items: PAR, pre: 'p', sec: 'par', cta: ['Explore Partnership', 'Tìm hiểu mảng Hợp tác'] }
+            { img: '1598544919456-fcb105fa7a6f', tag: ['Investment', 'Đầu tư'], h: ['Investing in Potential. Creating Long-Term Value.', 'Đầu tư vào tiềm năng. Kiến tạo giá trị dài hạn.'], d: ['Explore Leovian’s investment direction and approach to long-term value creation.', 'Khám phá định hướng đầu tư và phát triển giá trị dài hạn trong hệ sinh thái Leovian.'], items: INV, pre: 'i', sec: 'inv', cta: ['Explore Investment', 'Tìm hiểu mảng Đầu tư'] },
+            { img: '1522071820081-009f0129c71c', tag: ['Partnership', 'Hợp tác'], h: ['Connecting Expertise. Empowering Business Growth.', 'Kết nối chuyên môn. Đồng hành phát triển.'], d: ['Explore connections and collaboration within the Leovian ecosystem.', 'Khám phá hướng kết nối và hợp tác trong hệ sinh thái Leovian.'], items: PAR, pre: 'p', sec: 'par', cta: ['Explore Partnership', 'Tìm hiểu mảng Hợp tác'] }
         ];
         const MV = [
             { ic: 'target', t: ['Our Mission', 'Sứ mệnh'], d: ['To develop people, assets, businesses and communities — building foundations that enable individuals and organisations to continue growing through their own capabilities.', 'Phát triển con người, tài sản, doanh nghiệp và cộng đồng — tạo nền tảng để mỗi cá nhân và tổ chức có thể tiếp tục phát triển bằng năng lực của mình.'] },
@@ -2539,51 +2568,48 @@
             { ic: 'users', t: ['Startup Stories', 'Câu chuyện khởi nghiệp'], d: ['Explore entrepreneurial journeys, experiences, and lessons from founders and business communities.', 'Khám phá những hành trình, trải nghiệm và bài học từ cộng đồng doanh nhân và nhà sáng lập.'] }
         ];
         const EV = [
-            { t: ['Networking Evening (Demo)', 'Tối kết nối doanh nghiệp (Demo)'], d: ['Business discussions and community networking. Demonstration event only.', 'Thảo luận kinh doanh và kết nối cộng đồng. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 01', 'Ngày minh họa 01'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'] },
-            { t: ['Australia–Vietnam Business Forum (Demo)', 'Diễn đàn doanh nghiệp Úc – Việt (Demo)'], d: ['A forum format for partners and investors. Demonstration event only.', 'Diễn đàn dành cho đối tác và nhà đầu tư. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 02', 'Ngày minh họa 02'], loc: ['Melbourne / Ho Chi Minh City (placeholder)', 'Melbourne / TP. Hồ Chí Minh (minh họa)'] },
-            { t: ['Founders Roundtable (Demo)', 'Bàn tròn nhà sáng lập (Demo)'], d: ['An open conversation between founders. Demonstration event only.', 'Cuộc trò chuyện mở giữa các nhà sáng lập. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 03', 'Ngày minh họa 03'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'] },
-            { t: ['Community Gathering (Past demo)', 'Gặp gỡ cộng đồng (Demo đã qua)'], d: ['Highlights: introductions, short talks and open networking.', 'Điểm nhấn: giới thiệu, chia sẻ ngắn và kết nối tự do.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 },
-            { t: ['Investor Briefing (Past demo)', 'Buổi giới thiệu đầu tư (Demo đã qua)'], d: ['Highlights: a briefing format with Q&A.', 'Điểm nhấn: buổi giới thiệu có phần hỏi đáp.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 },
-            { t: ['Workshop Day (Past demo)', 'Ngày workshop (Demo đã qua)'], d: ['Highlights: hands-on sessions and team discussions.', 'Điểm nhấn: thực hành và thảo luận nhóm.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 }
+            { img: '1527529482837-4698179dc6ce', t: ['Networking Evening (Demo)', 'Tối kết nối doanh nghiệp (Demo)'], d: ['Business discussions and community networking. Demonstration event only.', 'Thảo luận kinh doanh và kết nối cộng đồng. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 01', 'Ngày minh họa 01'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'] },
+            { img: '1561489396-888724a1543d', t: ['Australia–Vietnam Business Forum (Demo)', 'Diễn đàn doanh nghiệp Úc – Việt (Demo)'], d: ['A forum format for partners and investors. Demonstration event only.', 'Diễn đàn dành cho đối tác và nhà đầu tư. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 02', 'Ngày minh họa 02'], loc: ['Melbourne / Ho Chi Minh City (placeholder)', 'Melbourne / TP. Hồ Chí Minh (minh họa)'] },
+            { img: '1531058020387-3be344556be6', t: ['Founders Roundtable (Demo)', 'Bàn tròn nhà sáng lập (Demo)'], d: ['An open conversation between founders. Demonstration event only.', 'Cuộc trò chuyện mở giữa các nhà sáng lập. Chỉ là sự kiện minh họa.'], date: ['Date placeholder 03', 'Ngày minh họa 03'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'] },
+            { img: '1515169067868-5387ec356754', t: ['Community Gathering (Past demo)', 'Gặp gỡ cộng đồng (Demo đã qua)'], d: ['Highlights: introductions, short talks and open networking.', 'Điểm nhấn: giới thiệu, chia sẻ ngắn và kết nối tự do.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 },
+            { img: '1587825140708-dfaf72ae4b04', t: ['Investor Briefing (Past demo)', 'Buổi giới thiệu đầu tư (Demo đã qua)'], d: ['Highlights: a briefing format with Q&A.', 'Điểm nhấn: buổi giới thiệu có phần hỏi đáp.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 },
+            { img: '1580894732444-8ecded7900cd', t: ['Workshop Day (Past demo)', 'Ngày workshop (Demo đã qua)'], d: ['Highlights: hands-on sessions and team discussions.', 'Điểm nhấn: thực hành và thảo luận nhóm.'], date: ['Past date placeholder', 'Ngày đã qua (minh họa)'], loc: ['Melbourne (placeholder)', 'Melbourne (minh họa)'], past: 1 }
         ];
-        const EV_COLORS = ['#3b2a1c', '#1f3340', '#2f3020'];
-        const NEWS_COLORS = ['#4a3818', '#3b2a1c', '#2f3020'];
         const TOPICS = [['Education & Careers', 'Giáo dục & Nghề nghiệp'], ['Real Estate & Assets', 'Bất động sản & Tài sản'], ['Business Advisory & Startups', 'Tư vấn doanh nghiệp & Khởi nghiệp'], ['Other', 'Khác']];
-        const TEAM_N = 5;
+        const TEAM_N = TEAM_IMG.length;
         const OFFICE = {
             addr: 'Ground Floor, 405 Collins Street<br>Melbourne VIC 3000, Australia',
             tel: '+61 405 331 876', telHref: 'tel:+61405331876',
-            mail: 'info@leovian.com.au', web: 'www.leovian.com.au'
+            mail: 'info@leovian.com.au', web: 'www.leovian.com.au',
+            map: 'https://maps.google.com/maps?q=405%20Collins%20Street%2C%20Melbourne%20VIC%203000&z=16&output=embed',
+            mapLink: 'https://www.google.com/maps/search/?api=1&query=405%20Collins%20Street%2C%20Melbourne%20VIC%203000'
         };
-
-        /* ---------- Animated scenes (kept from v1) ---------- */
-        const sv = x => `<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${x}</svg>`;
-        const S1 = sv(`<g stroke="#3a3226">${[...Array(17)].map((_, i) => `<path d="M${i * 100} 0V900M0 ${i * 55}H1600"/>`).join('')}</g><g fill="#171717" stroke="#C8A66A" stroke-width="2">${[[160, 380, 120], [300, 260, 150], [470, 440, 110], [620, 200, 170], [820, 340, 140], [990, 150, 160], [1170, 300, 130], [1320, 230, 150]].map((b, i) => `<rect class="bd" style="animation-delay:${i * .5}s" x="${b[0]}" y="${900 - b[1]}" width="${b[2]}" height="${b[1]}"/>`).join('')}</g><path class="ln1" d="M60 760C400 700 600 640 800 540S1200 330 1540 160" fill="none" stroke="#E2C58E" stroke-width="3"/>`);
-        const S2 = sv(`<path class="ln1" d="M250 460Q500 330 760 380T1300 300" fill="none" stroke="#C8A66A" stroke-width="2" opacity=".6"/><circle class="rp" cx="760" cy="520" r="90" fill="none" stroke="#E2C58E" stroke-width="2"/>${[[250, 620, .8], [500, 600, .9], [760, 570, 1.2], [1020, 560, .95], [1300, 540, 1.05]].map((p, i) => `<g transform="translate(${p[0]} ${p[1]}) scale(${p[2]})"><g class="fg" style="animation-delay:${i * .7}s"><circle cx="0" cy="-90" r="34" fill="#3a3020"/><path d="M-70 60Q-70-40 0-40Q70-40 70 60Z" fill="#2b2418" stroke="#C8A66A" stroke-width="2"/></g></g>`).join('')}`);
-        const S3 = sv(`<circle class="sun" cx="800" cy="560" r="110" fill="#C8A66A" opacity=".55"/>${[0, 1, 2].map(i => `<circle class="rp" style="animation-delay:${i * 2.2}s" cx="800" cy="560" r="130" fill="none" stroke="#E2C58E" stroke-width="2"/>`).join('')}<path d="M0 640Q400 560 800 620T1600 600V900H0Z" fill="#171717"/><path d="M0 720Q500 650 900 710T1600 690V900H0Z" fill="#0D0D0D"/><g fill="none" stroke="#E2C58E" stroke-width="2.5"><circle class="lk" cx="740" cy="800" r="42"/><circle class="lk2" cx="810" cy="800" r="42"/></g>`);
-        const SCENES = [S1, S2, S3];
-        const bgfx = n => `<div class="bgfx" aria-hidden="true"><i>${SCENES[n - 1]}</i></div>`;
 
         /* ---------- UI helpers ---------- */
         const goAttr = (to, sec) => `href="#${to}" data-go="${to}"${sec ? ` data-to="${sec}"` : ''}`;
         const btn = (label, to, cls = '', sec) => `<a class="btn ${cls}" ${goAttr(to, sec)}>${label}${ic('arrow', 'sm')}</a>`;
         const lnk = (label, to, sec) => `<a class="link" ${goAttr(to, sec)}>${label}${ic('arrow', 'sm')}</a>`;
         const stagger = i => `style="--i:${i}"`;
-        const ph = (label, icon, c, cls = '') => `<div class="ph ${cls}" data-l="[${label}]"${c ? ` style="--c:${c}"` : ''}>${icon ? ic(icon) : ''}</div>`;
+        const pic = (id, label, cls = '', w = 1000, alt = '', extra = '') => `<div class="ph ${cls}" data-l="[${label}]"><img src="${U(id, w, extra)}" alt="${alt}" loading="lazy" decoding="async"></div>`;
+        // Full-bleed photo with an optional looping video that fades in once it plays.
+        const bg = (m, w = 1920) => `<div class="bgfx" aria-hidden="true"><img src="${U(m.img, w)}" alt="" decoding="async">${m.vid && !LITE ? `<video muted loop playsinline preload="none" data-src="${PX(m.vid)}"></video>` : ''}</div>`;
         const head = (eyebrow, h, p) => `<div class="head rv${p ? '' : ' solo'}"><div><span class="eyebrow">${eyebrow}</span><h2>${h}</h2></div>${p ? `<p>${p}</p>` : ''}</div>`;
         const navLabel = k => tx(NAV.find(n => n.k === k).t);
 
-        const pageHead = (n, title, sub, lead, cls = '') => `<section class="phd tag-top ${cls}" data-l="[${page.toUpperCase()} — VIDEO LOOP 0${n}]">${bgfx(n)}<div class="shade"></div>
-            <div class="wrap phd-in">
-                <nav class="crumb" aria-label="Breadcrumb"><a ${goAttr('home')}>${t('Home', 'Trang chủ')}</a>${ic('chevr', 'xs')}<span aria-current="page">${navLabel(page)}</span></nav>
-                <h1>${title}</h1><p class="sub">${sub}</p><p class="lead">${lead}</p>
-            </div></section>`;
+        const pageHead = (title, sub, lead, cls = '') => {
+            const m = HEAD_MEDIA[page];
+            return `<section class="phd tag-top ${cls}" data-l="[${page.toUpperCase()} — HEADER ${m.vid ? 'VIDEO' : 'PHOTO'}]">${bg(m)}<div class="shade"></div>
+                <div class="wrap phd-in">
+                    <nav class="crumb" aria-label="Breadcrumb"><a ${goAttr('home')}>${t('Home', 'Trang chủ')}</a>${ic('chevr', 'xs')}<span aria-current="page">${navLabel(page)}</span></nav>
+                    <h1>${title}</h1><p class="sub">${sub}</p><p class="lead">${lead}</p>
+                </div></section>`;
+        };
 
-        const band = (n, eyebrow, h, p, actions) => `<section class="band tag-tr" data-l="[VIDEO LOOP 0${n}]">${bgfx(n)}<div class="shade"></div>
+        const band = (eyebrow, h, p, actions) => `<section class="band tag-tr" data-l="[${page.toUpperCase()} — CTA VIDEO]">${bg(BAND_MEDIA[page])}<div class="shade"></div>
             <div class="wrap band-in rv">${eyebrow ? `<span class="eyebrow">${eyebrow}</span>` : ''}<h2>${h}</h2>${p ? `<p>${p}</p>` : ''}<div class="actions">${actions}</div></div></section>`;
 
         const card = (x, i, pre, label) => `<article class="card rv" id="${pre}${i}" ${stagger(i)}>
-            <div class="media">${ph(label, x.ic, x.c)}</div>
+            <div class="media">${pic(x.img, label, '', 1000, tx(x.t))}</div>
             <div class="body"><span class="num">${pad(i + 1)}</span><h3>${tx(x.t)}</h3><p>${tx(x.d)}</p></div></article>`;
 
         const field = (label, name, type, o = {}) => `<label class="field${o.full ? ' full' : ''}"><span>${label}${o.req ? '<em> *</em>' : ` <small>(${t('optional', 'không bắt buộc')})</small>`}</span><input name="${name}" type="${type}"${o.req ? ' required' : ''}${o.ac ? ` autocomplete="${o.ac}"` : ''}></label>`;
@@ -2601,39 +2627,49 @@
                 { n: pad(INV.length), t: ['Investment sectors', 'Lĩnh vực đầu tư'], s: INV.map(x => tx(x.t)).join(' · ') },
                 { n: pad(PAR.length), t: ['Business solutions', 'Giải pháp doanh nghiệp'], s: ['Consulting · Marketing · Operations', 'Tư vấn · Marketing · Vận hành'] }
             ];
-            const pane = p => `<article class="pane rv" ${stagger(p === PANES[0] ? 0 : 1)}>
-                <div class="pane-hd"><span class="num">${p === PANES[0] ? '01' : '02'}</span><span class="pane-tag">${tx(p.tag)}</span></div>
-                <h3>${tx(p.h)}</h3><p>${tx(p.d)}</p>
-                <ul class="ilist">${p.items.map((x, i) => `<li><a ${goAttr('ecosystem', p.pre + i)}>${ic(x.ic)}<span>${tx(x.t)}</span>${ic('ur', 'xs')}</a></li>`).join('')}</ul>
-                ${btn(tx(p.cta), 'ecosystem', '', p.sec)}</article>`;
-            const teaser = (i, eyebrow, h, d, cta, to, label, icon, c) => `<article class="card lg rv" ${stagger(i)}>
-                <div class="media">${ph(label, icon, c)}</div>
+            const pane = (p, k) => `<article class="pane rv" ${stagger(k)}>
+                <div class="pane-media">${pic(p.img, `HOMEPAGE — ${tx(p.tag).toUpperCase()} PHOTO`, '', 1200)}</div>
+                <div class="pane-body">
+                    <div class="pane-hd"><span class="num">${pad(k + 1)}</span><span class="pane-tag">${tx(p.tag)}</span></div>
+                    <h3>${tx(p.h)}</h3><p>${tx(p.d)}</p>
+                    <ul class="ilist">${p.items.map((x, i) => `<li><a ${goAttr('ecosystem', p.pre + i)}>${ic(x.ic)}<span>${tx(x.t)}</span>${ic('ur', 'xs')}</a></li>`).join('')}</ul>
+                    ${btn(tx(p.cta), 'ecosystem', '', p.sec)}
+                </div></article>`;
+            const teaser = (i, eyebrow, h, d, cta, to, label, img) => `<article class="card lg rv" ${stagger(i)}>
+                <div class="media">${pic(img, label, '', 1200)}</div>
                 <div class="body"><span class="eyebrow">${eyebrow}</span><h3>${h}</h3><p>${d}</p><div class="more">${lnk(cta, to)}</div></div></article>`;
 
-            return `<section class="hero tag-top" data-l="[HOMEPAGE — VIDEO LOOP 01]">${bgfx(1)}<div class="shade"></div>
+            return `<section class="hero tag-top" data-l="[HOMEPAGE — HERO VIDEO: MELBOURNE ↔ TP.HCM]">
+                <div class="bgfx" aria-hidden="true"><img src="${U(HERO.poster, 1920)}" alt="" decoding="async">${HERO.clips.map(() => '<video class="hv" muted playsinline preload="none"></video>').join('')}</div>
+                <div class="shade"></div>
                 <div class="wrap hero-in"><div class="hero-copy">
                     <span class="eyebrow">${t('Investment · Partnership', 'Đầu tư · Hợp tác')}</span>
                     <h1>${t('Investment & Business <br>Development Ecosystem', 'Hệ sinh thái Đầu tư & <br>Phát triển Doanh nghiệp')}</h1>
                     <p class="sub">${t('Building Wealth. Empowering People.', 'Kiến tạo tài sản. Phát triển con người.')}</p>
                     <p class="lead">${t('Connecting capital, businesses, assets and Vietnamese communities across Australia and Vietnam to create lasting value for generations.', 'Kết nối vốn, doanh nghiệp, tài sản và cộng đồng Việt tại Úc và Việt Nam, hướng tới giá trị bền vững cho nhiều thế hệ.')}</p>
                     <div class="actions">${btn(t('Explore Leovian', 'Khám phá Leovian'), 'ecosystem', 'solid')}${lnk(t('About Us', 'Về chúng tôi'), 'about')}</div>
-                </div></div>
+                </div>
+                <div class="hero-loc" aria-live="polite">${ic('pin', 'xs')}<span id="hloc">${tx(HERO.clips[0].place)}</span><i aria-hidden="true">${HERO.clips.map((_, i) => `<b class="${i ? '' : 'on'}"></b>`).join('')}</i></div></div>
                 <div class="wrap"><div class="stats">${stats.map(s => `<div class="stat"><b>${s.n}</b><div><span>${tx(s.t)}</span><small>${Array.isArray(s.s) ? tx(s.s) : s.s}</small></div></div>`).join('')}
                     <button class="cue" data-scroll="intro" aria-label="${t('Scroll down', 'Cuộn xuống')}"><i></i></button></div></div>
             </section>
 
-            <section class="sec" id="intro"><div class="wrap split">
-                <div class="rv"><span class="eyebrow">${t('About Leovian', 'Về Leovian')}</span><h2>${t('Connecting Resources. Supporting Long-Term Growth.', 'Kết nối nguồn lực. Phát triển dài hạn.')}</h2></div>
-                <div class="rv" ${stagger(1)}>
-                    <p class="lead">${t('Leovian is building an ecosystem where investment and people development work together to support business and asset growth.', 'Leovian xây dựng một hệ sinh thái nơi đầu tư và phát triển con người cùng tạo nền tảng cho sự phát triển của doanh nghiệp và tài sản.')}</p>
-                    <blockquote class="pull">${t('“Lasting prosperity begins with people who can create, manage and grow assets.”', '“Sự thịnh vượng bền vững bắt đầu từ những con người biết tạo dựng, quản lý và phát triển tài sản.”')}</blockquote>
-                    ${lnk(t('About Us', 'Về chúng tôi'), 'about')}
+            <section class="sec" id="intro"><div class="wrap">
+                <div class="split">
+                    <div class="rv"><span class="eyebrow">${t('About Leovian', 'Về Leovian')}</span><h2>${t('Connecting Resources. Supporting Long-Term Growth.', 'Kết nối nguồn lực. Phát triển dài hạn.')}</h2></div>
+                    <div class="rv" ${stagger(1)}>
+                        <p class="lead">${t('Leovian is building an ecosystem where investment and people development work together to support business and asset growth.', 'Leovian xây dựng một hệ sinh thái nơi đầu tư và phát triển con người cùng tạo nền tảng cho sự phát triển của doanh nghiệp và tài sản.')}</p>
+                        <blockquote class="pull">${t('“Lasting prosperity begins with people who can create, manage and grow assets.”', '“Sự thịnh vượng bền vững bắt đầu từ những con người biết tạo dựng, quản lý và phát triển tài sản.”')}</blockquote>
+                        ${lnk(t('About Us', 'Về chúng tôi'), 'about')}
+                    </div>
                 </div>
+                <div class="markets">${MARKETS.map((m, i) => `<figure class="market rv" ${stagger(i)}>${pic(m.img, `HOMEPAGE — ${m.place[0].toUpperCase()} PHOTO`, '', 1400, tx(m.place))}
+                    <figcaption><span>${tx(m.place)}</span><small>${ic('pin', 'xs')}${tx(m.country)}</small></figcaption></figure>`).join('')}</div>
             </div></section>
 
             <section class="sec alt"><div class="wrap">
                 ${head(t('Our Purpose', 'Giá trị hướng tới'), t('Value that endures across generations.', 'Giá trị bền vững qua nhiều thế hệ.'))}
-                <div class="pillars">${PURPOSE.map((s, i) => `<article class="pillar rv tag-tr" ${stagger(i)} data-l="[HOMEPAGE — VIDEO LOOP 0${i + 1}]">${bgfx(i + 1)}
+                <div class="pillars">${PURPOSE.map((s, i) => `<article class="pillar rv tag-tr" ${stagger(i)} data-l="[HOMEPAGE — PURPOSE PHOTO 0${i + 1}]">${bg(s, 1000)}
                     <div class="pillar-in"><span class="num big">${pad(i + 1)}</span><h3>${tx(s.t)}</h3><p>${tx(s.d)}</p></div></article>`).join('')}</div>
             </div></section>
 
@@ -2643,22 +2679,22 @@
             </div></section>
 
             <section class="sec alt"><div class="wrap grid g2">
-                ${teaser(0, t('News & Insights', 'Tin tức & Góc nhìn'), t('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), t('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'), t('View News', 'Xem tin tức'), 'news', 'NEWS — ARTICLE COVER', 'doc', '#4a3818')}
-                ${teaser(1, t('Events', 'Sự kiện'), t('Meet. Connect. Grow.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), t('Explore events from Leovian and our partners.', 'Khám phá các sự kiện của Leovian và đối tác.'), t('View Events', 'Xem sự kiện'), 'events', 'EVENTS — EVENT COVER / GALLERY', 'cal', '#1f3340')}
+                ${teaser(0, t('News & Insights', 'Tin tức & Góc nhìn'), t('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), t('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'), t('View News', 'Xem tin tức'), 'news', 'NEWS — ARTICLE COVER', '1444653614773-995cb1ef9efa')}
+                ${teaser(1, t('Events', 'Sự kiện'), t('Meet. Connect. Grow.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), t('Explore events from Leovian and our partners.', 'Khám phá các sự kiện của Leovian và đối tác.'), t('View Events', 'Xem sự kiện'), 'events', 'EVENTS — EVENT COVER / GALLERY', '1505373877841-8d25f7d46678')}
             </div></section>
 
-            ${band(3, t('Contact', 'Liên hệ'), t('Explore New Possibilities Together.', 'Cùng mở ra cơ hội mới.'), '',
+            ${band(t('Contact', 'Liên hệ'), t('Explore New Possibilities Together.', 'Cùng mở ra cơ hội mới.'), '',
                 btn(t('Connect with Leovian', 'Kết nối với Leovian'), 'contact', 'solid') + `<a class="link plain" href="${OFFICE.telHref}">${ic('phone', 'sm')}${OFFICE.tel}</a>`)}`;
         };
 
         V.about = () => {
-            const slide = i => `<div class="slide" role="group" aria-roledescription="slide" aria-label="${i} / ${TEAM_N}">
-                ${ph('ABOUT US — TEAM MEMBER PORTRAIT', '', '', 'pt')}
-                <div><span class="eyebrow">${t('Placeholder team member', 'Thành viên minh họa')} ${pad(i)}</span>
+            const slide = (img, k) => `<div class="slide" role="group" aria-roledescription="slide" aria-label="${k + 1} / ${TEAM_N}">
+                ${pic(img, 'ABOUT US — TEAM MEMBER PORTRAIT', 'portrait', 720, t('Placeholder portrait', 'Ảnh chân dung minh họa'), '&h=900&crop=faces')}
+                <div><span class="eyebrow">${t('Placeholder team member', 'Thành viên minh họa')} ${pad(k + 1)}</span>
                 <blockquote data-l="[ABOUT US — TEAM MEMBER QUOTE]">${t('One personal sentence about their vision, purpose, or contribution to Leovian.', 'Một câu về tầm nhìn, mục đích hoặc đóng góp cá nhân cho Leovian.')}</blockquote>
-                <div class="who"><b>[${t('NAME', 'TÊN')} ${i}]</b><span>[${t('POSITION', 'CHỨC VỤ')}]</span></div></div></div>`;
+                <div class="who"><b>[${t('NAME', 'TÊN')} ${k + 1}]</b><span>[${t('POSITION', 'CHỨC VỤ')}]</span></div></div></div>`;
 
-            return pageHead(2, t('About Leovian', 'Về Leovian'), t('Building Wealth. Empowering People.', 'Kiến tạo tài sản. Phát triển con người.'), t('Leovian is an ecosystem connecting investment, businesses, technology, assets and people. With a focus on Australia and Vietnam, we aim to build financial and human value that can grow across generations.', 'Leovian là hệ sinh thái kết nối đầu tư, doanh nghiệp, công nghệ, tài sản và con người. Với trọng tâm tại Úc và Việt Nam, chúng tôi hướng tới xây dựng giá trị tài chính và giá trị con người có thể phát triển qua nhiều thế hệ.'))
+            return pageHead(t('About Leovian', 'Về Leovian'), t('Building Wealth. Empowering People.', 'Kiến tạo tài sản. Phát triển con người.'), t('Leovian is an ecosystem connecting investment, businesses, technology, assets and people. With a focus on Australia and Vietnam, we aim to build financial and human value that can grow across generations.', 'Leovian là hệ sinh thái kết nối đầu tư, doanh nghiệp, công nghệ, tài sản và con người. Với trọng tâm tại Úc và Việt Nam, chúng tôi hướng tới xây dựng giá trị tài chính và giá trị con người có thể phát triển qua nhiều thế hệ.'))
 
                 + `<section class="sec"><div class="wrap narrow rv"><span class="eyebrow">${t('Why Leovian Exists', 'Vì sao Leovian ra đời')}</span>
                     <p class="statement">${t('Leovian was founded on the belief that <em>lasting prosperity begins with people</em> who can create, manage and grow assets. Investing in people’s capabilities, mindset and sense of responsibility is therefore central to our approach.', 'Leovian được thành lập từ niềm tin rằng <em>sự thịnh vượng bền vững bắt đầu từ những con người</em> biết tạo dựng, quản lý và phát triển tài sản. Vì vậy, đầu tư vào năng lực, tư duy và trách nhiệm của con người là nền tảng trong định hướng của chúng tôi.')}</p></div></section>`
@@ -2671,14 +2707,14 @@
                 + `<section class="sec alt team"><div class="wrap">
                     <div class="head rv"><div><span class="eyebrow">${t('Our Team', 'Đội ngũ')}</span><h2>${t('The people behind Leovian.', 'Những con người phía sau Leovian.')}</h2></div>
                     <div class="car-ctl"><span class="car-count" id="tcount"></span><button class="rbtn" data-team="-1" aria-label="${t('Previous', 'Trước')}">${ic('chevl')}</button><button class="rbtn" data-team="1" aria-label="${t('Next', 'Tiếp')}">${ic('chevr')}</button></div></div>
-                    <div class="car rv" aria-roledescription="carousel" aria-label="${t('Team', 'Đội ngũ')}"><div class="car-track" id="track">${[1, 2, 3, 4, 5].map(slide).join('')}</div></div>
+                    <div class="car rv" aria-roledescription="carousel" aria-label="${t('Team', 'Đội ngũ')}"><div class="car-track" id="track">${TEAM_IMG.map(slide).join('')}</div></div>
                     <div class="car-bar"><i id="tbar"></i></div>
                 </div></section>`
 
-                + band(1, t('Our Ecosystem', 'Hệ sinh thái'), t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.'), '', btn(t('Explore Our Ecosystem', 'Khám phá hệ sinh thái'), 'ecosystem', 'solid'));
+                + band(t('Our Ecosystem', 'Hệ sinh thái'), t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.'), '', btn(t('Explore Our Ecosystem', 'Khám phá hệ sinh thái'), 'ecosystem', 'solid'));
         };
 
-        V.ecosystem = () => pageHead(1, t('Our Ecosystem', 'Hệ sinh thái Leovian'), t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.'), t('Leovian builds an ecosystem that connects investment opportunities with business development solutions, fostering collaboration and creating a foundation for sustainable, long-term value across Australia and Vietnam.', 'Leovian xây dựng hệ sinh thái kết nối hoạt động đầu tư và các giải pháp phát triển doanh nghiệp, tạo nền tảng hợp tác và hướng tới giá trị bền vững tại Úc và Việt Nam.'))
+        V.ecosystem = () => pageHead(t('Our Ecosystem', 'Hệ sinh thái Leovian'), t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.'), t('Leovian builds an ecosystem that connects investment opportunities with business development solutions, fostering collaboration and creating a foundation for sustainable, long-term value across Australia and Vietnam.', 'Leovian xây dựng hệ sinh thái kết nối hoạt động đầu tư và các giải pháp phát triển doanh nghiệp, tạo nền tảng hợp tác và hướng tới giá trị bền vững tại Úc và Việt Nam.'))
 
             + `<nav class="subnav" aria-label="${t('Sections', 'Các mục')}"><div class="wrap"><a ${goAttr('ecosystem', 'inv')}><span>01</span>${t('Investment', 'Đầu tư')}</a><a ${goAttr('ecosystem', 'par')}><span>02</span>${t('Partnership', 'Hợp tác & Giải pháp doanh nghiệp')}</a></div></nav>`
 
@@ -2694,19 +2730,19 @@
                 <div class="sec-foot rv">${btn(t('Explore Partnership Solutions', 'Khám phá giải pháp hợp tác'), 'contact', 'solid')}</div>
             </div></section>`
 
-            + band(3, '', t('Let’s Create Value Together', 'Cùng kiến tạo giá trị'), t('Whether you are exploring investment opportunities or seeking solutions to grow your business, Leovian is here to connect, collaborate, and explore the right opportunities with you.', 'Dù bạn đang tìm kiếm cơ hội đầu tư hay giải pháp phát triển doanh nghiệp, Leovian sẵn sàng kết nối và cùng bạn khám phá những hướng đi phù hợp.'), btn(t('Connect With Leovian', 'Kết nối với Leovian'), 'contact', 'solid'));
+            + band('', t('Let’s Create Value Together', 'Cùng kiến tạo giá trị'), t('Whether you are exploring investment opportunities or seeking solutions to grow your business, Leovian is here to connect, collaborate, and explore the right opportunities with you.', 'Dù bạn đang tìm kiếm cơ hội đầu tư hay giải pháp phát triển doanh nghiệp, Leovian sẵn sàng kết nối và cùng bạn khám phá những hướng đi phù hợp.'), btn(t('Connect With Leovian', 'Kết nối với Leovian'), 'contact', 'solid'));
 
-        V.news = () => pageHead(1, t('News & Insights', 'Tin tức & Góc nhìn'), t('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), t('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'))
+        V.news = () => pageHead(t('News & Insights', 'Tin tức & Góc nhìn'), t('Follow the Leovian Journey.', 'Cập nhật hành trình Leovian.'), t('Projects, activities and new milestones.', 'Dự án, hoạt động và những dấu mốc mới.'))
             + `<section class="sec"><div class="wrap">
                 <div class="notice rv">${ic('info', 'sm')}<span>${t('Placeholder layout. No real articles have been written yet.', 'Bố cục minh họa. Chưa có bài viết thật.')}</span></div>
-                <div class="news">${[0, 1, 2].map(i => `<article class="card rv" ${stagger(i)}>
-                    <div class="media">${ph('NEWS — ARTICLE COVER', 'doc', NEWS_COLORS[i])}</div>
+                <div class="news">${NEWS_IMG.map((img, i) => `<article class="card rv" ${stagger(i)}>
+                    <div class="media">${pic(img, 'NEWS — ARTICLE COVER', '', i ? 900 : 1400)}</div>
                     <div class="body"><div class="meta"><span class="chip">[${t('Category', 'Danh mục')}]</span><span>${ic('cal', 'xs')}[${t('Publish date', 'Ngày đăng')}]</span></div>
                     <h3>[${t('Placeholder article title', 'Tiêu đề bài viết minh họa')}]</h3><p>[${t('Short summary placeholder', 'Tóm tắt minh họa')}]</p></div></article>`).join('')}</div>
             </div></section>`;
 
-        V.startuplab = () => pageHead(3, t('Startup Lab', 'Không gian khởi nghiệp'), t('Where Ideas Begin. Where Potential Grows.', 'Nơi ý tưởng bắt đầu. Nơi tiềm năng phát triển.'), t('Startup Lab is a space for connecting ideas, sharing knowledge, and exploring growth opportunities within the entrepreneurial communities of Australia and Vietnam.', 'Startup Lab là không gian kết nối ý tưởng, chia sẻ kiến thức và khám phá cơ hội phát triển dành cho cộng đồng khởi nghiệp tại Úc và Việt Nam.'), 'has-overlap')
-            + `<div class="wrap overlap rv">${ph('STARTUP LAB — REAL TEAM BRAINSTORMING PHOTO', 'users', '#4a3818', 'wide')}</div>`
+        V.startuplab = () => pageHead(t('Startup Lab', 'Không gian khởi nghiệp'), t('Where Ideas Begin. Where Potential Grows.', 'Nơi ý tưởng bắt đầu. Nơi tiềm năng phát triển.'), t('Startup Lab is a space for connecting ideas, sharing knowledge, and exploring growth opportunities within the entrepreneurial communities of Australia and Vietnam.', 'Startup Lab là không gian kết nối ý tưởng, chia sẻ kiến thức và khám phá cơ hội phát triển dành cho cộng đồng khởi nghiệp tại Úc và Việt Nam.'), 'has-overlap')
+            + `<div class="wrap overlap rv">${pic('1598520106830-8c45c2035460', 'STARTUP LAB — REAL TEAM BRAINSTORMING PHOTO', 'wide', 1800, t('Team mapping ideas on a glass board', 'Nhóm phác thảo ý tưởng trên bảng kính'))}</div>`
             + `<section class="sec"><div class="wrap grid g3">${STARTUP.map((x, i) => `<article class="box rv" ${stagger(i)}><div class="icb">${ic(x.ic)}</div><h3>${tx(x.t)}</h3><p>${tx(x.d)}</p></article>`).join('')}</div></section>`
             + `<section class="sec alt" id="idea"><div class="wrap split">
                 <div class="rv"><span class="eyebrow">${t('Connect With Us', 'Kết nối cùng Leovian')}</span><h2 class="h-md">${t('Have a business idea or looking to connect with the startup community?', 'Bạn có một ý tưởng kinh doanh hoặc mong muốn kết nối với cộng đồng khởi nghiệp?')}</h2></div>
@@ -2714,21 +2750,20 @@
             </div></section>`;
 
         V.events = () => {
+            const meta = e => `<div class="meta"><span>${ic('cal', 'xs')}${tx(e.date)}</span><span>${ic('pin', 'xs')}${tx(e.loc)}</span></div>`;
             const row = (i, k) => {
                 const e = EV[i];
-                return `<article class="ev rv" ${stagger(k)}><div class="ev-date">${ic('cal')}<span>${tx(e.date)}</span></div>
-                    <div class="ev-main"><h3>${tx(e.t)}</h3><p>${tx(e.d)}</p></div>
-                    <div class="ev-loc">${ic('pin', 'sm')}<span>${tx(e.loc)}</span></div>
+                return `<article class="ev rv" ${stagger(k)}><div class="ev-media">${pic(e.img, 'EVENTS — EVENT COVER', '', 600)}</div>
+                    <div class="ev-main">${meta(e)}<h3>${tx(e.t)}</h3><p>${tx(e.d)}</p></div>
                     <button class="btn sm" data-ev="${i}">${t('View Details', 'Xem chi tiết')}${ic('arrow', 'sm')}</button></article>`;
             };
             const past = (i, k) => {
                 const e = EV[i];
-                return `<article class="card rv" ${stagger(k)}><div class="media">${ph('EVENTS — EVENT COVER / GALLERY', 'cal', EV_COLORS[i % 3])}</div>
-                    <div class="body"><div class="meta"><span>${ic('cal', 'xs')}${tx(e.date)}</span><span>${ic('pin', 'xs')}${tx(e.loc)}</span></div>
-                    <h3>${tx(e.t)}</h3><p>${tx(e.d)}</p>
+                return `<article class="card rv" ${stagger(k)}><div class="media">${pic(e.img, 'EVENTS — EVENT GALLERY', '', 900)}</div>
+                    <div class="body">${meta(e)}<h3>${tx(e.t)}</h3><p>${tx(e.d)}</p>
                     <div class="more"><button class="link" data-ev="${i}">${t('View Gallery', 'Xem thư viện')}${ic('arrow', 'sm')}</button></div></div></article>`;
             };
-            return pageHead(2, t('Events', 'Sự kiện'), t('Connect. Collaborate. Grow Together.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), t('Discover events, networking opportunities, and collaborative experiences with Leovian across Australia and Vietnam.', 'Khám phá những sự kiện, hoạt động kết nối và cơ hội hợp tác cùng Leovian tại Úc và Việt Nam.'))
+            return pageHead(t('Events', 'Sự kiện'), t('Connect. Collaborate. Grow Together.', 'Gặp gỡ. Kết nối. Cùng phát triển.'), t('Discover events, networking opportunities, and collaborative experiences with Leovian across Australia and Vietnam.', 'Khám phá những sự kiện, hoạt động kết nối và cơ hội hợp tác cùng Leovian tại Úc và Việt Nam.'))
                 + `<section class="sec"><div class="wrap">${head(t('Upcoming', 'Sắp diễn ra'), t('Upcoming Events', 'Sự kiện sắp diễn ra'), t('Stay informed about upcoming events and networking opportunities.', 'Cập nhật những sự kiện và chương trình kết nối sắp tới.'))}
                     <div class="agenda">${[0, 1, 2].map(row).join('')}</div></div></section>`
                 + `<section class="sec alt"><div class="wrap">${head(t('Archive', 'Lưu trữ'), t('Past Events', 'Sự kiện đã diễn ra'), t('Explore memorable moments, highlights, and activities from Leovian’s events and collaborations. (Demonstration data only.)', 'Nhìn lại những dấu ấn, khoảnh khắc và hoạt động nổi bật của Leovian cùng các đối tác. (Chỉ là dữ liệu minh họa.)'))}
@@ -2743,11 +2778,12 @@
                 ['globe', ['Website', 'Website'], `<a href="https://${OFFICE.web}" target="_blank" rel="noopener">${OFFICE.web}</a>`]
             ];
             const topics = `<label class="field"><span>${t('Area of interest', 'Chủ đề quan tâm')}</span><select name="topic">${TOPICS.map(o => `<option>${tx(o)}</option>`).join('')}</select></label>`;
-            return pageHead(3, t('Contact', 'Liên hệ'), t('Start a Conversation. Explore New Possibilities.', 'Bắt đầu kết nối. Mở ra cơ hội.'), t('Get in touch to learn about the Leovian ecosystem or discuss your needs.', 'Liên hệ với Leovian để tìm hiểu về hệ sinh thái hoặc trao đổi nhu cầu của bạn.'))
+            return pageHead(t('Contact', 'Liên hệ'), t('Start a Conversation. Explore New Possibilities.', 'Bắt đầu kết nối. Mở ra cơ hội.'), t('Get in touch to learn about the Leovian ecosystem or discuss your needs.', 'Liên hệ với Leovian để tìm hiểu về hệ sinh thái hoặc trao đổi nhu cầu của bạn.'))
                 + `<section class="sec"><div class="wrap contact">
                     <div class="rv"><span class="eyebrow">${t('Contact Details', 'Thông tin liên hệ')}</span><h2 class="h-md">${t('Melbourne Office', 'Văn phòng Melbourne')}</h2>
                         <ul class="clist">${rows.map(r => `<li><span class="icb">${ic(r[0])}</span><div><small>${tx(r[1])}</small>${r[2]}</div></li>`).join('')}</ul>
-                        ${ph('CONTACT — MAP EMBED', 'pin', '#2f3020', 'map')}</div>
+                        <div class="map"><iframe title="${t('Map: 405 Collins Street, Melbourne', 'Bản đồ: 405 Collins Street, Melbourne')}" src="${OFFICE.map}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+                        <a class="link plain map-link" href="${OFFICE.mapLink}" target="_blank" rel="noopener">${ic('pin', 'sm')}${t('Open in Google Maps', 'Mở trong Google Maps')}</a></div>
                     <div class="panel rv" ${stagger(1)}><span class="eyebrow">${t('Send Us a Message', 'Gửi lời nhắn')}</span><h2 class="h-md">${t('How can we help?', 'Chúng tôi có thể hỗ trợ gì cho bạn?')}</h2>
                         ${form(field(t('Full name', 'Họ và tên'), 'name', 'text', { req: 1, ac: 'name' }) + field('Email', 'email', 'email', { req: 1, ac: 'email' }) + field(t('Phone number', 'Số điện thoại'), 'phone', 'tel', { ac: 'tel' }) + topics + area(t('Your message', 'Nội dung lời nhắn'), 'message'), t('Send Message', 'Gửi lời nhắn'))}</div>
                 </div></section>`;
@@ -2757,7 +2793,7 @@
         function header() {
             const cur = k => page === k ? ' aria-current="page"' : '';
             const mega = `<div class="mega"><div class="mega-in">
-                <div class="mega-intro"><span class="eyebrow">${t('Our Ecosystem', 'Hệ sinh thái')}</span><p>${t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.')}</p>${lnk(t('Overview', 'Tổng quan'), 'ecosystem')}</div>
+                <div class="mega-intro"><img src="${U('1602559227639-3bba8ce496df', 600)}" alt="" loading="lazy"><span class="eyebrow">${t('Our Ecosystem', 'Hệ sinh thái')}</span><p>${t('Connecting Resources. Expanding Opportunities.', 'Kết nối nguồn lực. Mở rộng cơ hội.')}</p>${lnk(t('Overview', 'Tổng quan'), 'ecosystem')}</div>
                 ${PANES.map(p => `<div class="mega-col"><b>${tx(p.tag)}</b>${p.items.map((x, i) => `<a ${goAttr('ecosystem', p.pre + i)}>${ic(x.ic)}<span>${tx(x.t)}</span></a>`).join('')}</div>`).join('')}
             </div></div>`;
             const links = NAV.map(n => n.k === 'ecosystem'
@@ -2795,7 +2831,7 @@
                         <li>${ic('mail', 'sm')}<a href="mailto:${OFFICE.mail}">${OFFICE.mail}</a></li></ul></div>
                 </div>
                 <div class="ft-bot"><span>© ${new Date().getFullYear()} Leovian. ${t('All rights reserved.', 'Bảo lưu mọi quyền.')}</span>
-                    <span class="ft-note">${t('Design prototype — all content, people, events and contact details are placeholders pending Leovian approval.', 'Bản thiết kế mẫu — mọi nội dung, nhân sự, sự kiện và thông tin liên hệ đều là minh họa, chờ Leovian xác nhận.')}</span>
+                    <span class="ft-note">${t('Design prototype — all content, people, events and contact details are placeholders pending Leovian approval. Stock photos and video: Unsplash, Pexels.', 'Bản thiết kế mẫu — mọi nội dung, nhân sự, sự kiện và thông tin liên hệ đều là minh họa, chờ Leovian xác nhận. Ảnh và video minh họa: Unsplash, Pexels.')}</span>
                     <button class="totop">${t('Back to top', 'Lên đầu trang')}${ic('up', 'sm')}</button></div>
             </div>`;
         }
@@ -2819,6 +2855,53 @@
                 if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); }
             }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
             els.forEach(e => io.observe(e));
+        }
+
+        // Background videos only load and play while on screen.
+        function bgVideos() {
+            if (vio) vio.disconnect();
+            const vids = $$('video[data-src]');
+            if (!vids.length || !('IntersectionObserver' in window)) return;
+            vio = new IntersectionObserver(entries => entries.forEach(x => {
+                const v = x.target;
+                if (!x.isIntersecting) { v.pause(); return; }
+                if (!v.src) v.src = v.dataset.src;
+                v.play().catch(() => { });
+            }), { rootMargin: '200px 0px' });
+            vids.forEach(v => {
+                v.addEventListener('playing', () => v.classList.add('on'), { once: true });
+                vio.observe(v);
+            });
+        }
+
+        // Hero alternates Melbourne and Ho Chi Minh City clips with a crossfade.
+        function heroVideo() {
+            if (hio) hio.disconnect();
+            const vids = $$('.hv');
+            if (!vids.length || LITE) return;
+            const small = innerWidth < 900;
+            let cur = 0;
+            const show = i => {
+                cur = i;
+                vids.forEach((v, k) => v.classList.toggle('on', k === i));
+                $('#hloc').textContent = tx(HERO.clips[i].place);
+                $$('.hero-loc b').forEach((b, k) => b.classList.toggle('on', k === i));
+            };
+            vids.forEach((v, i) => {
+                v.src = PX(small ? HERO.clips[i].sd : HERO.clips[i].hd);
+                v.addEventListener('ended', () => {
+                    const n = (i + 1) % vids.length;
+                    vids[n].currentTime = 0;
+                    vids[n].play().then(() => show(n)).catch(() => { });
+                });
+            });
+            vids[0].preload = 'auto';
+            vids[0].addEventListener('playing', () => { vids.slice(1).forEach(v => { v.preload = 'auto'; }); }, { once: true });
+            hio = new IntersectionObserver(([x]) => {
+                if (x.isIntersecting) vids[cur].play().then(() => show(cur)).catch(() => { });
+                else vids[cur].pause();
+            });
+            hio.observe($('.hero'));
         }
 
         function team(d) {
@@ -2876,6 +2959,8 @@
             footer();
             chrome();
             reveal(keep);
+            bgVideos();
+            heroVideo();
             if (page === 'about') teamInit();
             if (!keep) {
                 jump(() => { if (!(target && scrollToId(target))) scrollTo(0, 0); });
@@ -2906,7 +2991,7 @@
 
         function openEvent(i) {
             const e = EV[i], d = $('#dlg');
-            d.innerHTML = `<div class="dlg-in">${ph('EVENTS — EVENT COVER / GALLERY', 'cal', EV_COLORS[i % 3], 'dlg-media')}
+            d.innerHTML = `<div class="dlg-in">${pic(e.img, 'EVENTS — EVENT COVER / GALLERY', 'dlg-media', 1200)}
                 <button class="dlg-x" data-close aria-label="${t('Close', 'Đóng')}">${ic('x')}</button>
                 <div class="dlg-body"><span class="eyebrow">${e.past ? t('Past event', 'Sự kiện đã diễn ra') : t('Upcoming event', 'Sự kiện sắp diễn ra')}</span>
                     <h3 id="dlg-title">${tx(e.t)}</h3>
